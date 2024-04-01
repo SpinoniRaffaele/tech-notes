@@ -24,6 +24,8 @@ When running a container, it uses an isolated filesystem. This custom filesystem
 A good practice is to put the dockerfile in the root directory of your app, then you can run the following to build the image:
 ```
 docker build -t getting-started .
+or
+docker image build -t getting-started .
 ```
 
 The -t flag tags your image. Think of this simply as a human-readable name for the final image. Since you named the image getting-started, you can refer to that image when you run a container. you can add multiple tag to an image:
@@ -42,11 +44,15 @@ docker run -dp 3000:3000 getting-started
 ```
 You use the `-d` flag to run the new container in “detached” mode (in the background). You also use the `-p` flag to create a mapping between the host’s port 3000 to the container’s port 3000. Without the port mapping, you wouldn’t be able to access the application. (by default every post is closed to the outside)
 
+If you run it in interactive mode (-it) you can exit from the container in two ways:
+- ctrl C: exit and stop the container
+- ctrl PQ: exit without stopping
+
 **REMOVE AND UPDATE A CONTAINER**
 
 Remove a container:
 in order to remove you first need to stop it
-get the runnnig containers using 'docker ps'
+get the runnnig containers using `docker ps` or `docker container ls` that is not listing the stopped container unless you add -a flag.
 Use the 'docker stop <container-id>' command to stop it.
 
 Then you can remove it by using the 'docker rm' command.
@@ -149,7 +155,7 @@ docker run -dp 3000:3000 \
   sh -c "yarn install && yarn run dev"
 ```
 docker-compose
-```
+```yml
 services:
   app:    #app is the name of the container running this image and it is automatically the hostname in the net
     image: node:18-alpine
@@ -200,10 +206,3 @@ to get the history of created layers.
 
 you should create a .dockerignore and ignore there the node\_modules files (in case of a node application)
 
-MULTI STAGE BUILDS
-multi-stage builds are an incredibly powerful tool to help use multiple stages to create an image. There are several advantages for them:
-
-* Separate build-time dependencies from runtime dependencies
-* Reduce overall image size by shipping _only_ what your app needs to run
-
-in the dockerfile you can specify several 'FROM <imagename>'  commands, each of these command is starting a new stage of the build which is going to be executed in a container based on the image provided in the FROM command.

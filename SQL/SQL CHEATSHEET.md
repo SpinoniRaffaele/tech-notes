@@ -12,7 +12,7 @@ aritmetic operators:    +, - , \* , /. %
 logical operators: =   >   <   >=   <=    <>    BETWEEN  (specify a range)  LIKE (string pattern)    IN
 
 example:
-```
+```sql
 SELECT * FROM Products
 WHERE Price BETWEEN 50 AND 60
 OR Date IS NULL    --null check
@@ -47,7 +47,7 @@ FROM Orders INNER JOIN Customers ON Orders.CustomerID=Customers.CustomerID;
 
 You can also perform self join on the same table,
 example: retrieve the customers from the same city:
-```
+```sql
 SELECT A.CustomerName AS CustomerName1, B.CustomerName AS CustomerName2, A.City
 FROM Customers A, Customers B
 WHERE A.CustomerID <> B.CustomerID
@@ -99,16 +99,19 @@ END;
 
 **INSERT & UPDATE**
 
-INSERT INTO _table\_name_
+```sql
+INSERT INTO _table_name_
 VALUES (_value1_, _value2_, _value3_, ...);
 
-UPDATE _table\_name_
-SET _column1_ \= _value1_, _column2_ \= _value2_, ...
+UPDATE _table_name_
+SET _column1_ = _value1_, _column2_ = _value2_, ...
 WHERE _condition_;
+```
 
 In this case we query a table and we put the result into a newtable
-SELECT \*
-INTO _newtable_ \[IN _externaldb_\]
+```sql
+SELECT *
+INTO _newtable_ [IN _externaldb_]
 FROM _oldtable_
 WHERE _condition_;
 
@@ -130,44 +133,53 @@ ALTER TABLE tablename
 MODIFY COLUMN columnName newDataType
 
 CREATE DATABASE dbname;
+```
 
 **DELETE**
 
-DELETE FROM _table\_name_  WHERE _condition_;     --deletes certain rows
+```sql
+DELETE FROM _table_name_  WHERE _condition_;     --deletes certain rows
 
-DROP TABLE _table\_name_;
+DROP TABLE _table_name_;
 
 DELETE DATABASE dbName;
+```
 
 **ALIAS**
 they give temporary names to table or column
-SELECT _column\_name_ AS _alias\_name_
-FROM _table\_name;_
+```sql
+SELECT _column_name_ AS _alias_name
+FROM _table_name;
 
-SELECT _column\_name(s)_
-FROM _table\_name_ AS _alias\_name;_
+SELECT _column_name(s)
+FROM _table_name_ AS _alias\name;
+```
 
 **INDEX**
 indexes are elements not visible from the DB structure, they change only the performance, you create an index when you need more performance on a specific column:
 
-CREATE INDEX index\_name
-ON table\_name (column\_name)
+```sql
+CREATE INDEX index_name
+ON table_name (column_name)
 
-and then you can delete if
-DROP INDEX _table\_name_._index\_name_;
+-- and then you can delete if
+DROP INDEX _table_name_._index_name_;
+```
 
 **STORED PROCEDURES**
 
 A stored procedure is a prepared SQL code that you can save, so the code can be reused over and over again.
 So if you have an SQL query that you write over and over again, save it as a stored procedure, and then just call it to execute it.
 
-CREATE PROCEDURE _procedure\_name_
+```sql
+CREATE PROCEDURE _procedure_name
 AS
-_sql\_statement_
+_sql_statement
 GO;
+```
 
 then run the procedure:
-EXEC _procedre\_name;_
+`EXEC _procedre_name;`
 
 **CONSTRAINTS**
 
@@ -178,7 +190,7 @@ EXEC _procedre\_name;_
 
 		A `FOREIGN KEY` is a field (or collection of fields) in one table, that refers to the [PRIMARY KEY](https://www.w3schools.com/sql/sql_primarykey.asp) in another table.
 		example:
-```
+```sql
 CREATE TABLE Orders (
     OrderID int NOT NULL PRIMARY KEY,
     OrderNumber int NOT NULL,
@@ -189,7 +201,7 @@ CREATE TABLE Orders (
 
 * [CHECK](https://www.w3schools.com/sql/sql_check.asp) - Ensures that the values in a column satisfies a specific condition
 
-```
+```sql
 CREATE TABLE Persons (
     ID int NOT NULL,
     LastName varchar(255) NOT NULL,
@@ -200,7 +212,7 @@ CREATE TABLE Persons (
 
 * [DEFAULT](https://www.w3schools.com/sql/sql_default.asp) - Sets a default value for a column if no value is specified
 
-```
+```sql
 CREATE TABLE Persons (
     ID int NOT NULL, 
     City varchar(255) DEFAULT 'Sandnes'

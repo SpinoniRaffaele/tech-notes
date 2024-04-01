@@ -9,11 +9,11 @@ you can assign the general object type like this: **let a: {};**
 typescript automatically infers the types if you initialize the variables
 
 you can define a type with
-```
+```typescript
 type Person = { name: string, age: number }
 ```
 Generics
 by using those you can use type inference also on generic functions, without rolling back to using any everywhere
-```
+```typescript
 function prepend<T>(arrays: T[], prefix: T): T[] {...}
 ```

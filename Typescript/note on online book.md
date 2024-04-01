@@ -114,6 +114,7 @@ Private, protected(access also to the subclasses), public  | by default it's pu
 Rest Parameter
 The rest parameter is used to pass zero or more values to a function. We can declare it by prefixing the three "dot" characters ('...') before the parameter. It allows the functions to have a different number of arguments without using the arguments object.
 Ex:
+```typescript
 function sum(a: number, ...b: number\[\]): number { 
   let result = a; 
   for (var i = 0; i < b.length; i++) { 
@@ -121,8 +122,9 @@ function sum(a: number, ...b: number\[\]): number { 
   } 
   return result; 
 } 
+```
 
-Instantiate an object:  let object\_name = new class\_name(parameter) 
+Instantiate an object:  `let object\_name = new class\_name(parameter) `
 
 Inheritance is identical to Java, there is the super() method, to call the superclass constructor.
 

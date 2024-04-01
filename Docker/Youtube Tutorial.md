@@ -57,22 +57,7 @@ How to run a Jenkins server on docker
 There is already a jenkins image called "jenkins"
 Then you set up a server , an admin user and there you can create jobs
 
-DOCKERFILE:
-Is the file telling which instructions will be executed during the docker build
-You need it in order to create your own docker image
-Example of dockerfile:
-		#specify an image as starting point
-		FROM ubuntu  
-		#specify a completely empty image
-		FROM SCRATCH
-		#set the person which maintain it
-		MAINTAINER name surname
-		#run commands on the image (executed only during the build of the image)
-		RUN apt-get update
-		\# run commands executed when you create a container from the image
-		CMD \["apt-get", "update"\]
-Note that each instruction is run independently, and causes a new image to be created - so RUN cd /tmp will not have any effect on the next instructions.
-Official docs: <https://docs.docker.com/engine/reference/builder/#environment-replacement>
+
 
 Docker COMPOSE
 Used to define multi container applications (in particular Microservices)

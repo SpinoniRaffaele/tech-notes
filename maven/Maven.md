@@ -22,7 +22,7 @@ inside the POM, under the root <project> tag, the <modelVersion> property is set
 An important facultative element: <packaging> jar/war/ear, <name> informal name, <description>
 Also licenses and developers:
 
-```
+```xml
 <licenses>
 	<license>
 			 <name>Apache License</name>
@@ -51,7 +51,7 @@ README.md
 LICENCE.txt
 
 How to tell maven to use non-standard directories? (it's better to stick to the standard)
-```
+```xml
 <build>
 	<sourceDirectory>src/nonstandard/java</sourceDirectory>   //java sources
 	<testSourceDirectory>src/nonstandard/java</testSourceDirectory>  // test sources
@@ -66,7 +66,7 @@ mvn help:effective-pom
 ```
 
 in order to inherit from another pom we need to refer to it:
-```
+```xml
 <parent>
 	<artifactId>...</artifactId>
 	<version></version>
@@ -76,7 +76,7 @@ in order to inherit from another pom we need to refer to it:
 
 ### PROFILES
 with profiles you can customize your information within the POM, for example having a different build output directory for production environment. Each profile needs to have an ID
-```
+```xml
 <profiles>
 	<profile>
 		<id>production</id>
@@ -93,7 +93,7 @@ mvn install -Pproduction
 
 You can also use an activation strategy to automatically activate a profile without any -P inputs.
 for example here we are activating with a environment property
-```
+```xml
 <profiles>
 	<profile>
 		<id>production</id>
@@ -110,7 +110,7 @@ for example here we are activating with a environment property
 </profiles>
 ```
 or you can activate the profile by default:
-```
+```xml
 <profiles>
 	<profile>
 		<id>production</id>
@@ -122,13 +122,13 @@ or you can activate the profile by default:
 ```
 
 you can automatically intiialize the project using this command and following the prompt required inputs:
-```
+```bash
 mvn archetype:generate
 ```
 ## Dependency Management
  The maven central repository is the default repository from which maven is downloading the dependencies.  It is defined in the superpom
  You have a dependency plugin in maven that you can use to see the dependency tree:
- ```
+ ```bash
  mvn dependency:tree
 ```
  locally you have a repository in your machine (under m2 folder) where the dependency that you have pulled are stored.
@@ -148,7 +148,7 @@ this bom can be used as:
 ### PROFILES
 
 You can create a profile with a personalized repository where it pulls dependencies from.
-```
+```xml
 <profile>
 	<id>spring-profile</id>
 		<repositories>
@@ -175,7 +175,7 @@ this is useful when the artifact is proprietary, or it's a snapshot version that
 
 When you have different versions of the same dep included as transitive dependencies, maven will place only the most up to date version of the dep in the classpath by default,
 you can explicitly exclude useless duplicate of dependency:
-```
+```xml
 <dependency>
 	<groupId>...</groupId>
 	<artifactId>...</artifactId>
@@ -208,7 +208,7 @@ Maven under the hood is using a pluginRepository (in the same way as the depende
 in the superpom there are some default plugins declared in a configured pluginRepository
 
 How to customize a plugin property:
-```
+```xml
 <build>
 	<pluginManagement>
 		<plugins>
@@ -233,7 +233,7 @@ the only class you need is a class extending **AbstractMojo**, this classs will 
 You will also need to put some javadoc on the class, with the @goal goalname and @phase phasename specified
 
 in the pom of the project defining the plugin you will need to customize the build:
-```
+```xml
 <packaging>maven-plugin</packaging>
 
 <build>
@@ -260,7 +260,7 @@ in this way when using our created plugin we can reference to it with a name.
 Then we can install the plugin in our local repo with mvn clean install.
 
 The POM of the java project that is using our plugin
-```
+```XML
 //inside the build and plugins
 <plugin>
 	<artifactId></artifactId>  //provide the coordinates of your developed plugin
@@ -286,7 +286,7 @@ Clean: it deletes the target folder (or any other ouputDirectory). clean is both
 jar: it allows to build a jar from a directory containing java code. (mvn jar:jar, jar plugin with jar goal, or mvn jar:test-jar). ITs paramter:
 - finalName: name of the output jar
 example:
-```
+```xml
 <build>
 	<pluginManagement>
 		<plugins>
@@ -308,7 +308,7 @@ consider checking the online documentation of the plugin at https://maven.apache
 javadoc plugin generates javadoc automatically from the code (mvn javadoc:javadoc): the output is the javadoc in the website format as a group of html files
 
 the deploy plugin (used in the deploy phase) needs a remote repository to be set in the POM (under project):
-```
+```xml
 <distributionManagement>
 	<repository>
 		<id>...</id>    // those three values are generally specified in your remote repository
@@ -320,8 +320,8 @@ the deploy plugin (used in the deploy phase) needs a remote repository to be set
 
 surefire: used by the test phase, you can skip the test execution with the mvn parameter: -Dmaven.test.skip=true
 you can also configure the surefire plugin to pass even if tests fail:
-```
-//inside plugin management and the surefire plugin
+inside plugin management and the surefire plugin
+```xml
 <configuration>
 	<testFailureIgnore>true</testFailureIgnore>
 </configuration>
@@ -336,7 +336,7 @@ you can also create your own archetype by setting the packaging property of your
 
 ## Multi modules project
 You can configure a packaging of type 'pom' meaning that that maven project doesn't contain any code but it's there just to configure maven, ticpically used as root pom:
-```
+```xml
 <packaging>pom</packaging>
 <modules>
 	<module>subproject1</module>  //specify all the children modules with their POMs
@@ -351,8 +351,8 @@ you need a user configured in apache (tomcat/conf/conf-users.xml)
 
 in the settings.xml (in the installation folder of maven)
 you need to add the tomcat credentials like this:
-```
-//inside the servers tag
+inside the servers tag
+```xml
 <server>
 	<id>tomcat-server</id>
 	<password>password</password>
@@ -361,7 +361,7 @@ you need to add the tomcat credentials like this:
 ```
 
 inside the POM of the project that you want to deploy:
-```
+```xml
 <build>
 	<finalName>myApp</finalName>
 	<plugins>
@@ -390,7 +390,7 @@ ${envPATH} will access the environment variable of the system called PATH
 
 
 Plus you can add custom properties:
-```
+```xml
 <properties>
 	<myProperty>value</myProperty>
 </properties>
