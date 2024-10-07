@@ -147,7 +147,7 @@ msg.value.getConversionRate()
 HOW TO TRANSFER ETH (from the contract to an address)
 - transfer function: `payable(destinationAddress).transfer(address(this).balance);` (it is capped at 2300 gas, if it overflow it will throw an error)
 - send: `bool success = payable(address).send(address(this).balance);require(success);` it's essential to require the success  (send doesn't throw an error but returning false in case of gas overflow, over 2300 gas)
-- call: `(bool success, bytes dataReturned) = payable(address).call{value: address(this).balance}(""); require(success, "Failed")` this works as send, it is the RECOMMENDED way
+- call: `(bool success, bytes dataReturned) = payable(address).call{value: address(this).balance}(""); require(success, "Failed")` this works as send, it is the RECOMMENDED way. 'Call' is a low level interaction with the EVM that let's you directly set the various fields of the transaction. (in this case we are setting the 'value' field where the amount of ETH is specified and sent with the transaction).
 
 
 MODIFIERS
@@ -264,3 +264,65 @@ VALUE1, VALUE2
 
 //MyEnum.VALUE1;
 ```
+
+
+
+ENCODING
+
+using the global object *abi*:
+```solidity
+string(abi.encodePacked(string1, string2)); 
+```
+this is concatenating strings and returning a bytes form of the string concatenation that is then casted as string
+
+When deploying a contract to the chain, the transaction that is deploying the contract has the 'To' field empty and the 'input data' is the bytecode of the compiled contract. The bytecode of the compiled code is a set of OPCODES (operation codes).
+
+encode and encodePacked are low level functions that encode inputs to the binary version of them that is directly readable from the EVM.
+
+Encode packed is doing an encoding without all the needed information (like sign and trailing zeros), it's saving space as maximum.
+
+These functions can also decode the string representing the binary:
+```solidity
+string originalStrings = abi.decode(encodedDoubleString, (string, string))
+```
+This returns the two strings that are encoded (it works only if they were encoded normally, not with encodePacked).
+Instead, in order to decode the encodePacked:
+`string(encodedThing)` 
+
+
+PULL OVER PUSH
+in Solidity we want to avoid pushing money to the user automatically, instead we offer the possibility of withdrawal to the user. Never send money as a consequence of an action, but offer a withdraw function with the transfering, in this way the responsability is of the user.
+
+RE-ENTRANCY ATTACK
+Whenever you are sending ETH (using call function) in a `withdraw` function, the caller contract could react to the call function with the special method `fallback`  to call again `withdraw` in a loop. If the `withdraw` function is vulnerable this can steal all the funds in the contract.
+
+Example of vulnerable withdraw:
+```
+function withdraw() payable public {
+	uint256 balance = balances[msg.sender];
+	require(balnce > 0);
+	(bool sent, _) = msg.sender.call{value: balance}("");
+
+	balances[msg.sender] = 0; // the balance reference is zeroed after the call
+	//if the attacker recalls withdraw in its fallback function he will take all 
+	// the balance of the contract.
+}
+
+
+//in the attacker contract
+function attack() external payable {
+	vulnerableContract.deposit{value: 1}();
+	vulnerableContract.withDraw();
+}
+
+fallback() external payable {
+	if(address(vulnerableContract).balance >= 1) {
+		vulnerableContract.withDraw();
+	}
+}
+```
+
+To prevent this attack always call external code (.call) as the last step of the function.
+You can also use a bool as a lock that you put to true at the beginnig of the method and false at the end. This prevents any type of re-entrancy attack.
+
+In openzeppelin there is a contract ready to help: NonReentrancy with has the modifier that you can just add to the vulnerable function: `nonReentrant`

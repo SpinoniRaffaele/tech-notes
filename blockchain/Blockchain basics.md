@@ -1,4 +1,42 @@
+## Create a Blockchain
+Start with a Communal ledger: an append only data structure that is public and anyone can add new lines
+
+How do we ensure that the new transactions are valid?
+with digital signature: every transaction need to be signed
+How? -> every node has a public and private key and sign transaction using the private key (message + private key are used to sign, message contains also unique number so that we cannot craft duplicates transactions)
+Anyone (only one is needed) can sign a transaction, and anyone can verify the signature just using the public key of the signer.
+
+In order to avoid people going in debt, only positive wallet are allowed (they cannot go under 0)
+
+Who host the ledger?
+To avoid giving trust to someone we replicate the ledger in each node's PC.
+
+At this point how do you reach consensus between each copy?
+Imagine a node listening for new transaction, how do you know if the others nodes have the same data in the same order?
+
+The solution that bitcoin uses to solve this issue is to:
+- trust the ledger with the longest list of transactions
+- make the process of adding a transaction computationally hard so that trying to fraud the system became computationally harder and harder as the ledger grows -> PROOF OF WORK
+
+Proof Of Work
+The computational riddle need for bitcoin is to find a nonce that if appended to the ledger and hashed will give a certain property to the result (like the first 30values are zeroes)
+This method requires and proof that the node has undergone computational effort, and can be verified instantly without needing computational work again.
+
+The proof of work is not applied at every transaction but the concept of block is introduced to group a set of transactions.
+How do we ensure that previous block are not tampered?
+We keep a reference of the previous block in every block (creating a chain of blocks), so that if the previous block is tampered, its hash changes and also the hash of the current block changes.
+
+The node that generates the proof of work is rewarded with a special transaction (the only one that is not signed) which gives a some native coins to the miner node.
+
+Whenever a node listens to different nodes it will trust the longest copy of the chain because more work have been put in place in that version.
+
+If you try to attack this system by crafting a transaction and sending it only to a node,
+you need to find the proof of work before any other node on the chain to validate the block.
+(at this point this is really feasible), but whenever a new node is added, and other nodes are adding nodes, the attacker would need to beat all the other participants in computing the proof of work each time a new block is added. This gets less probable at each new block added.
+In order to perform such attack successfully the attacker would need to control at least 50% of the network, it is in fact called 50% attack.
+## General Concepts
 Bitcoin is the fist protocol designed to use a blockchain as a network.
+Bitcoin is the ledger itself and the currency inside it.
 It is limited in amount and controlled by an algorithm, that makes it a way of storing value.
 Ethereum comes after with the possibility to wite smart contracts over the blockchaing unlocking the possibility to build DApps.
 Smart contract: set of instructions executed in a decentralized way without the need for a centralized third party. (executed on smart contract platforms like Ethereum).
@@ -65,16 +103,12 @@ Is the mechanism used to reach an agreement in the decentralized system.
 https://faucets.chain.link/E: it's an ecological alternative to proof of stake, nodes are staking collateral to the network, if they misbehave they lose the collaterals (miners are called validators). The validators are selected randomly by an external decentralized unit. no computation needed! only one selected node is actually mining the nonce.
 ETH 2.0 is moving to proof of stake.
 
+**PROOK OF HISTORY**
+https://medium.com/solana-labs/proof-of-history-explained-by-a-water-clock-e682183417b8
+Transactions timestamped with PoH are then processed using a Proof of Stake (PoS)-based consensus algorithm, Tower BFT, in Solana’s case. Validators stake SOL (Solana’s token) to participate, earning rewards for securing the network and validating transactions. Tower BFT, with the help of PoH’s timekeeping, quickly achieves consensus, allowing Solana to handle thousands of transactions per second​​.
 
-Layer one: any base layer blockchain implementation (bitcoin, ethereum, avalanche)
-Layer two: any application added on top of the blockchain (chainlink, arbitrum).
-	Layer two solutions are built to solve the scalability issues of the layer one network (too  many transaction on ETH causes network congestion, slow transaction times, high gas fees).
-	They are built on top of the layer one and they rely on the security of the layer one but they speed up transactions, they prioritize speed and they send the result to the layer 1 only for the final approval.
-	There are two types of L2 networks:
-	- sidechains: independent blockchains with different native tokens and consensus mechanism, they use a two-way bridge to communicate to the L1 chain.
-	- rollups: they bundle a batch of transactions and send them as a single piece to the L1 chain.
 
-**SMART CONTRACT CONNECTIVITY PROBLEM**: the blockchain needs to be deterministic, in order to ensure consensus between peers. For this reason a blockchain contraqct cannot make API calls outside or call random generating functions, this causes the blockchain to be isolated from the world.
+**SMART CONTRACT CONNECTIVITY PROBLEM**: the blockchain needs to be deterministic, in order to ensure consensus between peers. For this reason a blockchain contract cannot make API calls outside or call random generating functions, this causes the blockchain to be isolated from the world.
 solution: ORACLES: a proxy to the outer world, that is returning the same value for each peer in the chain -> no more problem with consensus.
 But the ORACLE is a single point of failure as opposed to the decentralized nature of the blockchain. Solution used by ChainLink: DATA FEEDS: use a bunch of different nodes/oracles and apply a consensus algorithm on top of their outcomes, then deploy this trusted answer as a contract in the blockchain.
 

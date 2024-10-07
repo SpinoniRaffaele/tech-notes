@@ -221,7 +221,7 @@ if you need another contract to interact with in your localhost, you will need t
 You can add a deploy script: *00-deploy-mock.js* and deploy all the mocks there. The mock is an actual solidity contract that you have to implement.
 
 
-then you can tag the different deploy scritps in order to run only a subset of them if needed,
+then you can tag the different deploy scripts in order to run only a subset of them if needed,
 for example:
 ```javascript
 //into 01-deploy.js
@@ -270,4 +270,19 @@ ACCESS EVENTS:
 In JS you can access emitted events data starting from the *transactionReceipt* after performing a transaction:
 ```javascript
 txReceipt.logs[0].args   //both indexed and non-indexed
+```
+
+
+FORKING MAINNET
+A nice way to test your contracts with hardhat is to fork a net (it can be any net, you will download it locally and create a local fork that will not interact with the real net) A good advantage is that you get automatically everything (also contracts) that is deployed in the main net.
+in hardhat.config.js:
+```javascript
+networks: {
+	hardhat: {
+		chainId: 31337,
+		forking: {
+			url: MAINNET_RPC_URL,  //the url of the fork (that you can easily create with alchemy website)
+		},
+	},
+}
 ```
