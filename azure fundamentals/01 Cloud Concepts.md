@@ -2,20 +2,19 @@ Cloud computing is the delivery of computing services over the internet (VM - co
 It is globally distributed and not physically constrained.
 With the cloud you only pay for the resources that you use, and the infrastructure layer is managed by the provider (updates and redundancy)
 You don't pay for the physical infrastructure, electricity, ..
-You pay for the cloud resources that you use
 ### Shared Responsibility model
-when using a cloud provider some reponsabilities will fall in their hands: physical security, power, cooling, network connectivity.
+when using a cloud provider some reponsibilities will fall in their hands: physical security, power, cooling, network connectivity.
 The client is responsible for the data stored and the access security.
-The responsability shift from the client to the provider based on the type of **service type** used:
-- **IaaS**: infrastructure, the provider is responsible only for the physical security, power, connectivity. With iaas the client has the maximum flexibility, only the hardware is handled by the provider. (Commnly used for cloud migration 1 to 1, rapid testing of PoCs)
+The responsibility shift from the client to the provider based on the type of **service type** used:
+- **IaaS**: infrastructure, the provider is responsible only for the physical security, power, connectivity. With iaas the client has the maximum flexibility, only the hardware is handled by the provider. (Commonly used for cloud migration 1 to 1, rapid testing of PoCs)
 - **PaaS**: platform, a bit of network control, a bit of application management and the operating system handling and patching are handled by the provider. The providers maintains also development tools and business intelligence services. (this is the general solution for development environment)
 - **SaaS**: software, application management, network control and identity management infrastructure are responsablities of the provider. It is the most complete cloud solution, it's like renting a fully developed application. Commonly used for support systems across the company: email, messaging, expense tracking application.
 ![[shared-responsibility-b3829bfe.svg]]
 
 ### Cloud Models
-- Private cloud: it's a cloud that us used by a single entity (the private cloud of a corporation) it requires greater costs.
+- Private cloud: it's a cloud that is used by a single entity (the private cloud of a corporation) it requires greater overhead costs. the org is responsible for the datacenter, only the org can access it. It's more secure because you can put it behind a completely private net.
 - Public cloud: built, controlled, maintained by a third-party provider.
-- Hybrid cloud: a mix of the two with a bit of private infrastructure being completed by a public cloud infrastructure.
+- Hybrid cloud: a mix of the two with a bit of private infrastructure being completed by a public cloud infrastructure. (org determine where to run apps, they control security, compliance and legal requirements).
 - Multi cloud: using a set of different cloud providers
 
 Azure arc are a set of technologies that helps you handle your cloud environment.
@@ -41,5 +40,5 @@ To put it another way, cloud computing is a way to rent compute power and storag
 	- **Cost predictability**: ability to predict the cost of cloud expenditure. You can track the resources in real time, monitor them, apply analytics to find patterns that ensure better deployments
 - **Security and governance**: both aspects are well supported by cloud services which ensure governance of the data and compliance to government requirements
 - **Manageability**:
-	- **Management of the cloud**: you can easily scale resources, deploy and remove them, monitor health and replace failing resources, receive automatic alerts based on confiugured metrics.
+	- **Management of the cloud**: you can easily scale resources, deploy and remove them, monitor health and replace failing resources, receive automatic alerts based on configured metrics.
 	- **Management in the cloud**: you can manage the cloud through the web portal, using CLI using API, using PowerShell.
