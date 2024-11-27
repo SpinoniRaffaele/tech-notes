@@ -10,3 +10,5 @@ and use Kubernetes as a service. The way of provision and manage K8s cluster in 
 * Azure Kubernetes servers: same steps as google, easy, with the integrated shell
 
 for each provider there is a documentation page that explains how to provision it.
+
+[[02 Azure Architectural Components]]

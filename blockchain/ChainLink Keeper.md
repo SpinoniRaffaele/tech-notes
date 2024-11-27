@@ -43,3 +43,4 @@ Then implements two functions:
         s_lastTimeStamp = block.timestamp;
     }
 ```
+[[Chainlink labs]]

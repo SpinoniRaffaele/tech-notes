@@ -7,3 +7,4 @@ Main differences
 - browser executes JS in the client side and provides a DOM to intercat with the webpage while node is running on server side without DOM (no document and window global objects).
 - Architecture difference: Node is made of V8 engine, C++ bindings and addons, javascript modules on top. Browsers has a JS interpreter and engine executed inside a rendering engine, it is runned in a cycle continuously.
 - node support both import and require to import modules while browser only use imports. because node supports both CommonJS and ES modules.
+

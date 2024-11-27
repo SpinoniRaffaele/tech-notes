@@ -138,3 +138,5 @@ contract Raffle is VRFConsumerBaseV2 {
 ```
 
 Notice that the VRFCoordinator contract needs to be deployed in order for this smart contract to work, in case of local testing a mock of the contract is needed
+
+[[Chainlink labs]]

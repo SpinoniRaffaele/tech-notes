@@ -21,7 +21,7 @@ It's always good to wrap the calls into services in order to have single API to 
 
 (he uses a firebase realtime DB and using the link provided in the firebase page as API endpoint, to consume the API you need to append .json to the end)
 
-the get request is a generic method so you can type the respose that you expect: **httpClient.get<MyDataType>('url')**
+the get request is a generic method so you can type the response that you expect: **httpClient.get('url')**
 
 Example of request:
 
@@ -61,11 +61,11 @@ add an optional parameter to the post/get/..
 ```
 http.post(url, {observe: 'response'})  //by default it's body
 ```
-you can also use the responseType: text in orded to get freetext, beware that then you cannot treat it as a JS object
+you can also use the responseType: text in order to get freetext, beware that then you cannot treat it as a JS object
 
-CATCHeRROR
+CatchError
 
-you can use the rxjs throwError t create an observable that wraps an error.
+you can use the RXJS throwError t create an observable that wraps an error.
 after calling the http request, inside you can use catchErrors and use the error observable:
 imagine for example you need to send the error to some analytics service.
 ```
@@ -100,3 +100,5 @@ return next.handle(req).pipe(map(event => {
 }))
 ```
 generally you should use **tap (**from rxjs/observable) that allow you to work with the event returned, but at the end it returns the original value
+
+[[RXJS]]

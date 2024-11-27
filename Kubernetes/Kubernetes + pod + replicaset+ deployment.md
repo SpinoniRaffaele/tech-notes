@@ -2,7 +2,7 @@
 
 is a cloud based deployment application
 **is a container orchestration technology developed by Google**
-container: check docker note
+container: [[Book by Nigel Poulton]]
 orchestration: if you want your application to use a variable amount of containers based on the load you will need an underlying environment in which those containers are executed, which is configurable and can scale the instances
 this can also make your application more reliable because you can run multiple instances of it, and if one fails the others are able to serve other clients.
 
