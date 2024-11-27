@@ -18,8 +18,8 @@ For the dependencies resolution, maven uses a DEPENDENCY MANAGER that search for
 (it also download the plugins in the same way as dependencies)
 
 ## POM
-inside the POM, under the root <project> tag, the <modelVersion> property is setting the version of language used in the POM itself, it's one of the mandatory tags, together with <articatId>, <groupId>, <version>.
-An important facultative element: <packaging> jar/war/ear, <name> informal name, <description>
+inside the POM, under the root *project* tag, the *modelVersion* property is setting the version of language used in the POM itself, it's one of the mandatory tags, together with *artifactId*, *groupId*, *version*.
+An important facultative element: *packaging* jar/war/ear, *name* informal name, *description*
 Also licenses and developers:
 
 ```xml
@@ -35,7 +35,6 @@ Also licenses and developers:
 		<email>...</email>
 	</developer>
 </developers>
-
 ```
 those informations can be used to generate a website page with the phase: **mvn site**
 (you will find the index.html in the target/site)
@@ -135,13 +134,13 @@ mvn archetype:generate
  
 When conflict arises maven chooses the dependency closest to the root level, if more at the same level are present maven chooses the first one declared (in order of reading the POM). If we want to override a transitive dependency's version, we can include it in our POM with the desired version (in this way it will be at the root level of the tree).
 
-The <dependencyManagement> section contains a set of dependencies used to specify the version that maven should use for each of them. It's useful in multi-modules projects, you define the version in the parent POM in the dependencyManagement section and then you can use the same dependency in the children's POM without the need to specify the version.
-NB: you will need to add the dependency somewhere outside the <dependencyManagement> because adding it there is not telling maven to pull it.
+The *dependencyManagement* section contains a set of dependencies used to specify the version that maven should use for each of them. It's useful in multi-modules projects, you define the version in the parent POM in the *dependencyManagement* section and then you can use the same dependency in the children's POM without the need to specify the version.
+NB: you will need to add the dependency somewhere outside the *dependencyManagement* because adding it there is not telling maven to pull it.
 
 ### BOM
-The bill of material is a special POM file used to group dependencies and their version, it has a 'pom' packaging and a 'dependencyManagement' section that lists the dependencies needed
+The bill of material is a special POM file used to group dependencies and their version, it has a 'pom' packaging and a *dependencyManagement* section that lists the dependencies needed
 
-this bom can be used as:
+this BOM can be used as:
 - parent pom: after having declared it as a parent, in your children modules you can refer to the dependencies needed without the need to specifiy the version
 - a dependency: you can add the bom dependency in the dependencyManagement section of your project (specify the <type>pom</type>), then you can add the dependencies without need to specify the version
 
