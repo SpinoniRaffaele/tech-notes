@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Angular/HTTP in Angular.md",
+                "file": "Presentations/slide test.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "HTTP in Angular"
+              "title": "slide test"
             }
           }
         ]
@@ -77,7 +77,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 220.5
   },
   "right": {
     "id": "1afe7dcc473c96fe",
@@ -86,7 +86,7 @@
       {
         "id": "e3ab27005a5faac3",
         "type": "tabs",
-        "dimension": 71.90506735086593,
+        "dimension": 68.33333333333333,
         "children": [
           {
             "id": "4e18cb9e840110da",
@@ -94,7 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "azure fundamentals/03 Cost management, Governance, Monitoring.md",
+                "file": "Presentations/slide test.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -104,7 +104,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks for 03 Cost management, Governance, Monitoring"
+              "title": "Backlinks for slide test"
             }
           },
           {
@@ -113,12 +113,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "azure fundamentals/03 Cost management, Governance, Monitoring.md",
+                "file": "Presentations/slide test.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Outgoing links from 03 Cost management, Governance, Monitoring"
+              "title": "Outgoing links from slide test"
             }
           },
           {
@@ -149,9 +149,11 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {},
+              "state": {
+                "file": "Presentations/slide test.md"
+              },
               "icon": "lucide-list",
-              "title": "Outline"
+              "title": "Outline of slide test"
             }
           },
           {
@@ -180,7 +182,7 @@
       {
         "id": "3868b9a0a0df01ff",
         "type": "tabs",
-        "dimension": 28.09493264913406,
+        "dimension": 31.666666666666664,
         "children": [
           {
             "id": "f897e4553d711228",
@@ -207,16 +209,36 @@
       "daily-notes:Open today's daily note": false,
       "templates:Insert template": false,
       "command-palette:Open command palette": false,
-      "obsidian-git:Open Git source control": false
+      "obsidian-git:Open Git source control": false,
+      "obsidian-advanced-slides:Show Slide Preview": false
     }
   },
-  "active": "d0c1447d26e9f165",
+  "active": "2891d1dcc3879884",
   "lastOpenFiles": [
+    "fab.md",
+    "Presentations/slide test.md",
+    "SQL/SQL CHEATSHEET.md",
+    "Work/Component.md",
+    "Work/Drafts/Login Skip.canvas",
+    "Work/Webservices.md",
+    "Work/Drafts/Login Skip.md",
+    "Work/Drafts/Untitled.md",
+    "Work/AppStore Local Dev.md",
+    "Presentations/Untitled.canvas",
+    "Presentations",
+    "Typescript/note on online book.md",
+    "Work/DB.md",
+    "Work/PTR.md",
+    "Work/PRs Management.md",
+    "_resources/Pasted image 20241127103555.png",
+    "_resources/Pasted image 20241127103136.png",
+    "_resources/Pasted image 20241127103131.png",
+    "Work/Drafts",
+    "Work",
     "Angular/HTTP in Angular.md",
     "Angular/HTTP in Angular.1.md",
     "Angular/Angular Universal.md",
     "Typescript/browser vs node.md",
-    "Typescript/note on online book.md",
     "maven/Maven.md",
     "Angular/Getting started.md",
     "_resources/ccip-diagram-04_v04.webp",
@@ -229,35 +251,18 @@
     "2024-11-27.md",
     "Untitled.canvas",
     "Angular/RXJS.md",
-    "Angular/NgRx.md",
-    "Kubernetes/K8s on cloud.md",
-    "blockchain/Chainlink VRF v2.md",
-    "blockchain/ChainLink Keeper.md",
-    "blockchain/Chainlink labs.md",
     "Angular/_resources/RXJS.resources/image.png",
-    "android/Android development.md",
-    "SQL/SQL CHEATSHEET.md",
     "android",
-    "Snow/Nivologie.md",
     "_resources/Pasted image 20241124154818.png",
     "_resources/Pasted image 20241124155107.png",
     "_resources/Pasted image 20241124155702.png",
     "_resources/Pasted image 20241124155516.png",
     "_resources/Pasted image 20241124155302.png",
-    "_resources/Pasted image 20241124153551.png",
-    "Pasted image 20241124153530.png",
-    "azure fundamentals/03 Cost management, Governance, Monitoring.md",
     "Snow",
-    "azure fundamentals/01 Cloud Concepts.md",
-    "azure fundamentals/02 Azure Architectural Components.md",
-    "_resources/Pasted image 20241014181950.png",
     "azure fundamentals",
     "_resources/Chainlink.png.crdownload",
     "_resources",
     "__resources",
-    "New folder",
-    "maven",
-    "blockchain/_resources",
-    "blockchain"
+    "New folder"
   ]
 }

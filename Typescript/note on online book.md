@@ -1,5 +1,3 @@
-# note on online book
-
 Typescript is built upon javascript, it uses a compile time type check.
 it adds static typing to JS.
 It is a superset of javascript, it is compiled by the Angular CLI.

@@ -1,4 +1,5 @@
 {
   "accentColor": "#bb00ff",
-  "cssTheme": "Wasp"
+  "cssTheme": "Wasp",
+  "nativeMenus": false
 }
