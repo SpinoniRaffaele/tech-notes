@@ -9,7 +9,7 @@ The responsibility shift from the client to the provider based on the type of **
 - **IaaS**: infrastructure, the provider is responsible only for the physical security, power, connectivity. With iaas the client has the maximum flexibility, only the hardware is handled by the provider. (Commonly used for cloud migration 1 to 1, rapid testing of PoCs)
 - **PaaS**: platform, a bit of network control, a bit of application management and the operating system handling and patching are handled by the provider. The providers maintains also development tools and business intelligence services. (this is the general solution for development environment)
 - **SaaS**: software, application management, network control and identity management infrastructure are responsablities of the provider. It is the most complete cloud solution, it's like renting a fully developed application. Commonly used for support systems across the company: email, messaging, expense tracking application.
-![[shared-responsibility-b3829bfe.svg]]
+![shared-responsibility-b3829bfe.svg](../_resources/shared-responsibility-b3829bfe.svg)
 
 ### Cloud Models
 - Private cloud: it's a cloud that is used by a single entity (the private cloud of a corporation) it requires greater overhead costs. the org is responsible for the datacenter, only the org can access it. It's more secure because you can put it behind a completely private net.

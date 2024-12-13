@@ -18,7 +18,7 @@ Using resources in multiple AZs will make a resilient and more available system.
 In Particular Azure distinguishes:
 - **zonal services**: services that are attached to a zone (VMs)
 - **zone-redundant services:** automatically replicated across the AZs (SQL DB)
-- **non-regional services**: services always available globally, resilient to zone-wide outages.
+- **non-regional services**: services always available globally, resilient to region-wide outages.
 
 **Region Pairs**: most Azure regions are paired with another region at lease 300 miles away. This allow for replication of resources in a region pair, in order to be resilient to massive issues that impact an entire region. (ex: West US + East US). Some services are automatically replicated.
 
@@ -32,17 +32,17 @@ When you perform an action on a resource group you are doing the same action for
 **Subscription**: unit of management, billing and scale. They allow to logically group resource groups to facilitate billing and management. You can implement boundaries between subscriptions:
 - Billing boundaries (different way of billing resources)
 - Access Control boundaries
-You can use subscriptions to separate environment (testing and prod), or different structures inside the organization, or different billing purposes (so you can easily track costs in grouped sections).
+You can use subscriptions to separate environment (testing and prod), or different structures inside the organization, or different billing purposes (so you can easily track costs in grouped sections). Cannot be nested.
 
-**Management group**: management level above subscriptions, used to apply common governance conditions to the different subs. Used for enterprise-grade management. Management group can also be nested. Management groups also apply role-based access control that will be inherited by all the entities underneath. 10000 management groups are the limit for a single directory, the nesting can reach up to 6 levels.
+**Management group**: management level above subscriptions, used to apply common governance conditions to the different subs. Used for enterprise-grade management. Management group can be nested. Management groups also apply role-based access control that will be inherited by all the entities underneath. 10000 management groups are the limit for a single directory, the nesting can reach up to 6 levels.
 
 # Computing Components
 ## Azure virtual Machines
-They are a type of IaaS, it is a virtualized server that can be user in any way with any software, you have total control over the OS, the hosting configuration and the software inside. You can create VM from an array of predefined image to have an OS ready in minutes. When choosing a VM you need to specify the resources associated: size (cores and RAM), storage disks, networking (public IP addresses, v net, port configuration)
+They are a type of IaaS, it is a virtualized server that can be used in any way with any software, you have total control over the OS, the hosting configuration and the software inside. You can create VM from an array of predefined image to have an OS ready in minutes. When choosing a VM you need to specify the resources associated: size (cores and RAM), storage disks, networking (public IP addresses, v net, port configuration)
 
-**VM Scale Sets**: this azure component allow you to manage, configure, and update azure config a set of VMs together in one shot, you can set up scalability to increase/decrease the amount of machines in the set. Under the hood the scale sets deploys a load balancer that makes sure to balance the load across the VMs. (imagine you are patching the OS of one of the machines, the load balancer will redirect traffic to the other instances of the set)
+**VM Scale Sets**: this azure component allow you to manage, configure, and update a set of VMs together in one shot, you can set up scalability to increase/decrease the amount of machines in the set. Under the hood the scale sets deploys a load balancer that makes sure to balance the load across the VMs. (imagine you are patching the OS of one of the machines, the load balancer will redirect traffic to the other instances of the set)
 
-**VM Availability sets**: an azure component that uses varied power and network connectivity to various VMs to have a logical reliable unit. It accomplishes this in two ways:
+**VM Availability sets**: an azure component that uses varied power sources and network connectivity to link various VMs to have a logical reliable unit. It accomplishes this in two ways:
 - Update domain: is a grouping of VMs that can be updated at the same time. An availability set spans across multiple update domain allow to apply rolling update so that only one VM at a time is down. (you can ensure the same updates with VM availability sets)
 - Fault Domain: a group of VM with common power source and network switch. An availability set spans across 3 fault domains.
 Availability sets are free and you pay only for the VM instances that you create.
@@ -53,8 +53,7 @@ VMs are also an excellent choice when you move from a physical server to the clo
 You can scale up and down as needed. the app will work and look like it's local (except for a small icon identifying that is it is virtual). This enhances security because it's centralized and the users don't have to worry. The data and the apps are separated from the client's hardware making the risk of confidential data leak smaller.
 
 **Azure containers Instances**: containers are virtualization environments, you can run multiple different OS containers inside the same virtual host. Containers are more light-weight w.r.t VMs and they are designed to be created, scaled and stopped frequently. Azure supports Docker as a container engine.
-VM virtualize the hardware while Containers virtualize the operating system. With containers you can run multiple OS in the same host. Containers are more portable and more portable.
-Containers are a PaaS offering because they manage the underlying VM.
+VM virtualize the hardware while Containers virtualize the operating system. With containers you can run multiple OS in the same host. Containers are more portable. Containers are a PaaS offering because they manage the underlying VM.
 **Azure container Apps** are a more advanced solution that allows you to run an app right away, this service removes the container management responsibility from the customer to the cloud provider.
 **Azure Kubernetes service**: a more complete solution offering also the container management of Kubernetes
 
@@ -83,7 +82,7 @@ If you want to link different private azure resources you can use **Service Endp
 
 If you need to link the on-premises resources to the Azure cloud resources, you can use an Azure **VPN**, or **Azure ExpressRoute** which provides a dedicated VPN that doesn't travel over the internet but in private channels (used for high bandwidth and higher levels of security).
 
-Azure automatically handles the routing between the subnets, but yo can override the behavior with custom elements:
+Azure automatically handles the routing between the subnets, but you can override the behavior with custom elements:
 - **Route tables:** you can define you own rules of routing
 - **Border Gateway Protocol**: used with VPNs to propagate the on-premises BGP routes to Azure virtual networks.
 
@@ -97,8 +96,8 @@ You can link different virtual networks using **virtual network peering**: it us
 it's an encrypted tunnel inside another network, used to connect more private networks over a public network.
 **VPN GATEWAY**: an azure component deployed in a subnet of a virtual network that enables to connect other networks/devices to the virtual network safely through the internet.
 There are two types of VPN gateway, you must configure one:
-- Policy-based gateway: the packets are send based on a static map of IP address to locations
-- Route-based gateway: the tunnels are dynamic to topology changes and the packet is sent on dynamic destination
+- **Policy-based gateway**: the packets are send based on a static map of IP address to locations
+- **Route-based gateway**: the tunnels are dynamic to topology changes and the packet is sent on dynamic destination
 By default the VPN gateway is deployed in a couple of active/standby gateways underneath.
 You can configure the active/active scenario, but in this case you will have 2 IPs exposed to the internet with which you can connect. You can also setup the VPN gateway to use the public internet in case the private Azure infrastructure (ExpressRoute) is not available.
 
@@ -124,7 +123,7 @@ Hot, cool and cold can be set at account level. Archive can be set for individua
 
 In order to use storage solutions you need to create a storage account, the type of the account will determine the storage service and redundancy options (more on this later).
 Account types:
-![[Pasted image 20241011153304.png]]
+![Pasted-image-20241011153304.png](../_resources/storage-account-types.png)
 The storage account have an unique name that creates a namespace in azure. You will see the name + service which creates a unique identifier for the service (also an URL).
 
 Storage is durable and highly available thanks to redundancy, it is secure because data is encrypted, it is accessible with a variety of libraries and with an API.
@@ -202,7 +201,7 @@ In case you want to give access to customer instead, you can leverage Azure AD B
 is a tool that Entra ID uses to allow/deny access to resources based on identity signals (who is the user, where is the user, what is the device that the user is using).
 Useful to protect the organizational assets.
 Conditional Access offers granular configuration of the MFA (user doesn't need the second factor if he is in a known location).
-![[Pasted image 20241014181950.png]]
+![](../_resources/azure-conditional-access.png)
 users signal are used to take decisions which might require enforcements (such as 2FA).
 You can also completely block access from specific signal condition (access only from managed device, block untrusted sources like unexpected locations).
 
