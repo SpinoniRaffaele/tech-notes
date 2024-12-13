@@ -114,7 +114,7 @@ A DNS scaled at Azure level, it is reliable and highly available, it is secure b
 
 
 # Storage Services
-Different storage solutions based on the needs. Massive amount of massive binary data (BLOB storage). File storage, ideal for file sharing on the cloud. Disk storage, provide disks for VM and applications, SSD and conventional hard drives, Table stores, great for key value pairs storing. Message queue for storing messages not yet processed. You can optimize the cost by choosing between:
+Different storage solutions based on the needs. Massive amount of binary data (BLOB storage). File storage, ideal for file sharing on the cloud. Disk storage, provide disks for VM and applications, SSD and conventional hard drives, Table stores, great for key value pairs storing. Message queue for storing messages not yet processed. You can optimize the cost by choosing between:
 - hot for frequent access
 - cool (stored for at least 30 days, for example invoices)
 - cold: data stored for at least 90 days and accessed infrequently
@@ -129,31 +129,34 @@ The storage account have an unique name that creates a namespace in azure. You w
 Storage is durable and highly available thanks to redundancy, it is secure because data is encrypted, it is accessible with a variety of libraries and with an API.
 
 ### Redundancy
-Azure stores multiple copies of data automatically, choosing the raight redundancy option is a trade off between cost and availability. For your data you have a primary region where it is stored and secondary regions for backup.
+Azure stores multiple copies of data automatically, choosing the wright redundancy option is a trade off between cost and availability. For your data you have a primary region where it is stored and secondary regions for backup.
 
 Data in azure storage is always replicated 3 times in the primary region, it can be replicated in two ways:
-- Locally redundant storage: the 3 copies are in the same datacenter (11 nines of durability), 
-- Zone redundant storage: the 3 copies are in 3 AZs (12 nines of durability), it itill restrict data within a country or region to meet governance requirements.
+- **Locally redundant storage**: the 3 copies are in the same datacenter (11 nines of durability), 
+- **Zone redundant storage**: the 3 copies are in 3 AZs (12 nines of durability), it still restrict data within a country or region to meet governance requirements.
 
 When you select the primary region, the secondary one is based on azure region pairs and it can't be changed. By default the data on the secondary region is not accessible even for read (you can set it to be always accessible for read), it can be activated in case of fail of the primary region (in this case the secondary region becomes the primary one). Notice that the data in the secondary region may not be up-to-date with the primary and there is no SLA on Azure to ensure low sync time. Types of redundancy with secondary region:
-- Geo-redundant storage: it is a locally redundant storage in two regions. (16 nines of durability)
-- Geo-zone-redundant storage: it is zone redundant in the primary region and locally redundant in the secondary. (16 nines still).
+- **Geo-redundant storage**: it is a locally redundant storage in two regions. (16 nines of durability)
+- **Geo-zone-redundant storage**: it is zone redundant in the primary region and locally redundant in the secondary. (16 nines still).
 ### Azure Blobs
 Used to store massive amounts of data, it is unstructured, it can hold any data. It is not limited by file formats, it doesn't require developers to manage disks (contrary to the disk storage). Ideal for image, videos, streaming, storing backups, analytics warehouse.
 You can access objects in the blob storage through an API or use client application/libraries.
+- Page blobs: collection of small pages optimized for random read and write
+- Block blobs: composed of blocks, you can only modify entire block at a time (optimized to upload big data efficiently)
+- Append blobs: it is a variation of a block blob optimized for append operation
 ### Azure files
 Fully managed file share solution accessible through network file system protocols or Server message block.
 ### Azure queues
 Service for storing large number of messages. Once stored they can be access anywhere, each individual message can take up to 64Kb. They can be combined with azure functions to take an action when a message is received, in order to perform async tasks.
 ### Azure disks
-block-level storage volumes managed by azure, they are like physical disks, but virualized, ideal to be paired with VMs that require storage.
+block-level storage volumes managed by azure, they are like physical disks, but virtualized, ideal to be paired with VMs that require storage.
 ### Azure tables
-Key value pair storage of large amount of data. It is a NoSQL datastore ideal for storing non structure data.
+Key value pair storage of large amount of data. It is a NoSQL datastore ideal for storing non-structured data.
 
 ## Data Migration
 Azure migrate is a service that help your migration to the cloud, it provides:
-- Unified migration platform: a portal to track your migration process.
-- Tools: used for assessment and migration:
+- **Unified migration platform**: a portal to track your migration process.
+- **Tools**: used for assessment and migration:
 	- azure migrate: discovery and assessment
 	- azure migrate: server migration
 	- data migration assistant (for SQL servers)
@@ -162,9 +165,9 @@ Azure migrate is a service that help your migration to the cloud, it provides:
 	- azure data box: physical migration service that ships your proprietary data storage device with data box (80 Tb). The shipping process is tracked by azure. It is suited for scenario where big amount of data needs to be transferred (> 40Tb). It can be used also to export data from azure datacenters (disaster recovery/ security requirements).
 
 For smaller amount of data Azure offers the following:
-- AzCopy: command line utility that you can use to copy data to or from your storage account.
-- Azure storage explorer: standalone application that has a UI to manage files and blobs in your storage account (it is a UI on top of AzCopy)
-- Azure file sync: tool to sync between a local Window server and azure storage, it is bi-directionally synced
+- **AzCopy**: command line utility that you can use to copy data to or from your storage account.
+- **Azure storage explorer**: standalone application that has a UI to manage files and blobs in your storage account (it is a UI on top of AzCopy)
+- **Azure file sync**: tool to sync between a local Window server and azure storage, it is bi-directionally synced
 
 
 # Identity, Access and Security
@@ -173,7 +176,7 @@ For smaller amount of data Azure offers the following:
 cloud based identity and access management service.
 is a directory service enabling you to access cloud application (Microsoft or not).
 Active directory runs on windows server and it is the on-premises equivalent, the cloud version is Entra ID. It lets you control the identity accounts. It also detects suspicious sign-in attempts.
-Active directory and Entra ID needs to maintain two sets of identities, however you can synchronize identities between the two enabling a consistent identity experience.
+When you are in a hybrid cloud, Active directory and Entra ID needs to maintain two sets of identities, however you can synchronize identities between the two enabling a consistent identity experience.
 
 It is used by IT admins to control access to the resources, it can be used by devs to add functionalities to the app they build (like SSO or access to resources).
 It can be used by users themselves to manage their account (like self-service password reset).
@@ -190,11 +193,12 @@ It integrates with the existing Microsoft Entra tenant (on-premise domain servic
 When you create a Microsoft Entra Domain Services managed domain, multiple domain controllers are deployed into the selected region as a replica set, those are fully managed by azure.
 The managed domain perform one-way synchronization from Entra ID to Microsoft Entra Domain Services, so if you create resources directly into the domain services they won't be reflected in Entra ID.
 
+
 Authentication is the process of establishing the identity of a person, service, or device.
 Azure provides passwords, 2FA (provided by Microsoft Entra Multifactor Authentication), SSO and passwordless (once you registered the device, you can sign in providing something you know (a PIN) or something you are (fingerprint)).
 Windows Hello for business / Microsoft Authenticator App / FIDO2 security keys (external security key or a key built into a device) are the passwordless solutions that integrate with Microsoft Entra ID.
 
-Microsoft Entra External ID manages all the ways you can securely interact with users outside your org. External users uses their own digital identity (like google or Facebook or another company), the external identity provider manages their identity, Microsoft Entra external ID manages the access to your apps. If the external person comes from another Microsoft Entra org in a B2B context, you can establish a mutual, two-way trust between the orgs for seamless collaboration.
+**Microsoft Entra External ID** manages all the ways you can securely interact with users outside your org. External users uses their own digital identity (like google or Facebook or another company), the external identity provider manages their identity, Microsoft Entra external ID manages the access to your apps. If the external person comes from another Microsoft Entra org in a B2B context, you can establish a mutual, two-way trust between the orgs for seamless collaboration.
 In case you want to give access to customer instead, you can leverage Azure AD B2C for identity and access management.
 
 ### Azure Conditional Access
@@ -216,9 +220,9 @@ Azure role-based access control is enforced through **Azure Resource Manager** w
 
 ### Zero trust model
 it is a security model that assumes the worst case scenario and protects resources based on this assumption. It is based on these principles:
-- verify explicitly: always authenticate and authorize
-- least privilege access: limit user access to the minimum required
-- assume breach: verify e2e encryption, use analytics to spot malicious actions, improve defenses.
+- **verify explicitly**: always authenticate and authorize
+- **least privilege access**: limit user access to the minimum required
+- **assume breach**: verify e2e encryption, use analytics to spot malicious actions, improve defenses.
 
 Traditionally corporate networks were considered safe thanks to the fact that the access was restricted. With the cloud everything is in the public network.
 
