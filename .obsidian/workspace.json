@@ -11,10 +11,14 @@
             "id": "c620524e5013815f",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "azure fundamentals/02 Azure Architectural Components.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "New tab"
+              "title": "02 Azure Architectural Components"
             }
           }
         ]
@@ -73,7 +77,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 220.5
+    "width": 220.5,
+    "collapsed": true
   },
   "right": {
     "id": "1afe7dcc473c96fe",
@@ -173,7 +178,7 @@
             }
           }
         ],
-        "currentTab": 5
+        "currentTab": 6
       },
       {
         "id": "3868b9a0a0df01ff",
@@ -194,8 +199,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 243.5,
-    "collapsed": true
+    "width": 243.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -212,19 +216,24 @@
   },
   "active": "c620524e5013815f",
   "lastOpenFiles": [
-    "Work/Component.md",
-    "Work/Presentations/Respiration presentation.md",
-    "Work/Drafts/Custoloader refactor.md",
+    "azure fundamentals/03 Cost management, Governance, Monitoring.md",
     "azure fundamentals/02 Azure Architectural Components.md",
+    "azure fundamentals/fundamentals mindmap.canvas",
+    "azure fundamentals/01 Cloud Concepts.md",
+    "Work/Component.md",
     "Work/Webservices.md",
     "Work/PTR.md",
+    "Work/PR management.md",
+    "Work/DB.md",
+    "Untitled",
+    "Work/AppStore Local dev.md",
+    "Work",
+    "Work/Presentations/Respiration presentation.md",
+    "Work/Drafts/Custoloader refactor.md",
     "Work/PRs Management.md",
     "Work/Drafts/Login Skip.canvas",
-    "Work/DB.md",
     "Work/AppStore Local Dev.md",
-    "azure fundamentals/01 Cloud Concepts.md",
     "_resources/azure-conditional-access.png",
-    "azure fundamentals/03 Cost management, Governance, Monitoring.md",
     "_resources/Pasted image 20240422164058.png",
     "_resources/storage-account-types.png",
     "Work/Presentations/resources/appstoreDeployment.png",
@@ -247,18 +256,13 @@
     "Angular/Angular Universal.md",
     "Typescript/browser vs node.md",
     "maven/Maven.md",
-    "Angular/Getting started.md",
     "_resources/ccip-diagram-04_v04.webp",
-    "Kubernetes/Kubernetes + pod + replicaset+ deployment.md",
-    "Kubernetes/Kubectl.md",
     "Untitled.canvas",
     "Angular/_resources/RXJS.resources/image.png",
     "android",
     "_resources/Pasted image 20241124154818.png",
     "Snow",
     "azure fundamentals",
-    "_resources/Chainlink.png.crdownload",
-    "_resources",
-    "__resources"
+    "_resources/Chainlink.png.crdownload"
   ]
 }

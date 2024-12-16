@@ -44,7 +44,7 @@ These locks cannot be overridden, even the owner of the resource must delete the
 
 ## Manage and Deploy Resources
 Azure provide multiple tools to manage resources:
-- **Azure portal**: web based graphical unified platform, it also allow you to configure custom dashboard and has accessibility options. It has high availability since it is present in every azure datacenter; it is constantly updated. Inside the portal you have access to the **Cloud shel**l: a browser based shell, it doesn't require local installation and supports both powershell and bash.
+- **Azure portal**: web based graphical unified platform, it also allow you to configure custom dashboard and has accessibility options. It has high availability since it is present in every azure datacenter; it is constantly updated. Inside the portal you have access to the **Cloud shel**l: a browser based shell, fully free, it doesn't require local installation and supports both powershell and bash.
 - **Azure powershell**: shell exposing commands to devops, these commands call the Azure REST API to perform resource management. With scripts, the process of changing/creating resources become tracked, repeatable and automatable
 - **Azure command line interface** (CLI): equivalent to the powershell it is using bash syntax
 
@@ -64,11 +64,11 @@ Using ARM templates has multiple benefits:
 - modular files: you can break down your infrastructure in multiple files.
 - extensibility: the templates can be extended with custom scripts (powershell or bash).
 
-**Bicep**: a language that uses declarative syntax to deploy azure resources. It is a concise alternative to the JSON ARM templates. It supports all resources types, it has a simple syntax and offers the same advantages a arm templates.
+**Bicep**: a language that uses declarative syntax to deploy azure resources. It is a concise alternative to the JSON ARM templates. It supports all resources types, it has a simple syntax and offers the same advantages as ARM templates do.
 
 ## Monitoring
-**Azure Advisor**: is a tool that evaluates the resources and makes recommendations to help improve **reliability**, **security** and **performance**, achieve **operational excellence** and reduce **costs**.
-You can filter the suggestions by resource groups or subscriptions.
+**Azure Advisor**: is a tool that continuously scan and evaluates the resources and makes recommendations to help improve **reliability**, **security** and **performance**, achieve **operational excellence** and reduce **costs**.
+You can filter the suggestions by resource groups or subscriptions. It is a free service.
 
 **Azure Service Health**: a service that keeps track of the resources (both your specific ones and azure in general). It uses three different services:
 - Azure status: the status of azure globally (used to monitor outages in AZs).
@@ -76,14 +76,14 @@ You can filter the suggestions by resource groups or subscriptions.
 - Resource health: provides info about a single resource.
 
 **Azure Monitor**
-it is a platform for collecting data on your resources, analyze it, virtualize the information and even respond with actions. It can monitor azure, on-premises and even multi-cloud resources.
+it is a platform for collecting data on your resources, analyze them, virtualize the information and even respond with actions. It can monitor azure, on-premises and even multi-cloud resources.
 
 Azure monitor uses central repositories to store data about metrics, logs and traces.
 The data is then accessible in Azure monitor in several ways: graph historical datapoints, create reports, create custom views with Power BI, use it to react in real-time (like autoscaling when a threshold is reach). You can set up alerts to be informed when a threshold is being crossed
 
 **Azure Log analytics**: a tool where you can analyze logs, query them, filter, visualize results.
 
-You can go deeper in gathering data by installing **Application insights** SDK in your application that run in the cloud resources, and then in azure you can monitor a broader set of information:
+You can go deeper in gathering data by installing **Application insights SDK** in your application that run in the cloud resources, and then in azure you can monitor a broader set of information:
 - requests rates, times.
 - dependencies
 - page view and load performance

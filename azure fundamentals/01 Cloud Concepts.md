@@ -16,9 +16,6 @@ The responsibility shift from the client to the provider based on the type of **
 - Public cloud: built, controlled, maintained by a third-party provider.
 - Hybrid cloud: a mix of the two with a bit of private infrastructure being completed by a public cloud infrastructure. (org determine where to run apps, they control security, compliance and legal requirements).
 - Multi cloud: using a set of different cloud providers
-
-Azure arc are a set of technologies that helps you handle your cloud environment.
-
 ### Consumption-based model
 CapEx (capital expenditure): one time, up-front expenditure to buy a resource (such as a server)
 OpEx (operation expenditure): spendings over time for services, such as cloud services.
@@ -42,3 +39,40 @@ To put it another way, cloud computing is a way to rent compute power and storag
 - **Manageability**:
 	- **Management of the cloud**: you can easily scale resources, deploy and remove them, monitor health and replace failing resources, receive automatic alerts based on configured metrics.
 	- **Management in the cloud**: you can manage the cloud through the web portal, using CLI using API, using PowerShell.
+
+
+### Azure resources overview
+Azure provides more than 100 services that enable you to do everything from running your existing applications on virtual machines to exploring new software paradigms, a cloud is not just a set of VMs but other tools ready to use and integrated in the environment.
+
+In order to use Azure services you need an Azure **subscription**, with an **Azure account** one subscription is automatically created, but multiple ones can be added. Inside each subscription there can be multiple **resource groups** where different azure services are grouped.
+Each subscription has its own invoice, and it's total amount to bill for the resources used
+Azure offers a free account with access to 20 Azure services for 1 year, a credit to be used in the year and access to some developer tools.
+Azure CLI can be accessed using `az` , for example you can start an interactive shell that helps you to insert azure commands like so:
+`az interactive`, then you can type `exit`.
+
+### Physical Infrastructure
+Azure is made of datacenters, which are facilities of resources spread around the world. As a customer you don't access datacenter directly but regions and availability zones:
+- Region: geographical area that contains at least one or more datacenters that work in a low-latency network, it is the LOCATION of services (although some services are global and not deployed to a specific region)
+- AZ: they are physically separate datacenters in an Azure region. Availability Zones are isolation boundaries in the sense that if a zone goes down the other continues working. Different AZ in the same region are connected through a fiber-optic network. 
+  There are at least 3 AZ in each region supporting AZ.
+Using resources in multiple AZs will make a resilient and more available system. AZ are primarily for VM, managed disks, load balancer and SQL databases.
+In Particular Azure distinguishes:
+- **zonal services**: services that are attached to a zone (VMs)
+- **zone-redundant services:** automatically replicated across the AZs (SQL DB)
+- **non-regional services**: services always available globally, resilient to region-wide outages.
+
+**Region Pairs**: most Azure regions are paired with another region at lease 300 miles away. This allow for replication of resources in a region pair, in order to be resilient to massive issues that impact an entire region. (ex: West US + East US). Some services are automatically replicated. The regions pair are inside a GEOGRAPHY, they are fault tolerant, they ensure resiliency.
+
+**Sovereign Regions**: Instances of azure that are isolated from the main instance of Azure (used by governments, ex: US Gov Virginia, China East)
+
+### Management Infrastructure
+A **resource** is the basic building block for azure, anything you create, provision, deploy, etc... is a resource.
+**Resource group**: a group of resources, each resource must be in a unique resource group, resource groups cannot be nested and the resources can be moved from group A to group B.
+When you perform an action on a resource group you are doing the same action for all the resources inside.
+
+**Subscription**: unit of management, billing and scale. They allow to logically group resource groups to facilitate billing and management. You can implement boundaries between subscriptions:
+- Billing boundaries (different way of billing resources)
+- Access Control boundaries
+You can use subscriptions to separate environment (testing and prod), or different structures inside the organization, or different billing purposes (so you can easily track costs in grouped sections). Cannot be nested.
+
+**Management group**: management level above subscriptions, used to apply common governance conditions to the different subs. Used for enterprise-grade management. Management group can be nested. Management groups also apply role-based access control that will be inherited by all the entities underneath. 10000 management groups are the limit for a single directory, the nesting can reach up to 6 levels.

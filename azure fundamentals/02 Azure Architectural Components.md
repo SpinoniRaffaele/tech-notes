@@ -1,44 +1,6 @@
-Azure provides more than 100 services that enable you to do everything from running your existing applications on virtual machines to exploring new software paradigms, a cloud is not just a set of VMs but other tools ready to use and integrated in the environment.
-
-In order to use Azure services you need an Azure **subscription**, with an **Azure account** one subscription is automatically created, but multiple ones can be added. Inside each subscription there can be multiple **resource groups** where different azure services are grouped.
-
-Each subscription has its own invoice, and it's total amount to bill for the resources used
-
-Azure offers a free account with access to 20 Azure services for 1 year, a credit to be used in the year and access to some developer tools.
-
-Azure CLI can be accessed using `az` , for example you can start an interactive shell that helps you to insert azure commands like so:
-`az interactive`, then you can type `exit`.
-
-### Physical Infrastructure
-Azure is made of datacenters, which are facilities of resources spread around the world. As a customer you don't access datacenter directly but regions and availability zones:
-- Region: graphical area that contains at least one or more datacenters that work in a low-latency network
-- AZ: they are physically separate datacenters in an Azure region. Availability Zones are isolation boundaries in the sense that if a zone goes down the other continues working. Different AZ in the same region are connected through a fiber-optic network. 
-  There are at least 3 AZ in each region supporting AZ.
-Using resources in multiple AZs will make a resilient and more available system. AZ are primarily for VM, managed disks, load balancer and SQL databases.
-In Particular Azure distinguishes:
-- **zonal services**: services that are attached to a zone (VMs)
-- **zone-redundant services:** automatically replicated across the AZs (SQL DB)
-- **non-regional services**: services always available globally, resilient to region-wide outages.
-
-**Region Pairs**: most Azure regions are paired with another region at lease 300 miles away. This allow for replication of resources in a region pair, in order to be resilient to massive issues that impact an entire region. (ex: West US + East US). Some services are automatically replicated.
-
-**Sovereign Regions**: Instances of azure that are isolated from the main instance of Azure (used by governments, ex: US Gov Virginia, China East)
-
-### Management Infrastructure
-A **resource** is the basic building block for azure, anything you create, provision, deploy, etc... is a resource.
-**Resource group**: a group of resources, each resource must be in a unique resource group, resource groups cannot be nested and the resources can be moved from group A to group B.
-When you perform an action on a resource group you are doing the same action for all the resources inside.
-
-**Subscription**: unit of management, billing and scale. They allow to logically group resource groups to facilitate billing and management. You can implement boundaries between subscriptions:
-- Billing boundaries (different way of billing resources)
-- Access Control boundaries
-You can use subscriptions to separate environment (testing and prod), or different structures inside the organization, or different billing purposes (so you can easily track costs in grouped sections). Cannot be nested.
-
-**Management group**: management level above subscriptions, used to apply common governance conditions to the different subs. Used for enterprise-grade management. Management group can be nested. Management groups also apply role-based access control that will be inherited by all the entities underneath. 10000 management groups are the limit for a single directory, the nesting can reach up to 6 levels.
-
 # Computing Components
 ## Azure virtual Machines
-They are a type of IaaS, it is a virtualized server that can be used in any way with any software, you have total control over the OS, the hosting configuration and the software inside. You can create VM from an array of predefined image to have an OS ready in minutes. When choosing a VM you need to specify the resources associated: size (cores and RAM), storage disks, networking (public IP addresses, v net, port configuration)
+They are a type of IaaS, it is a virtualized server that can be used in any way with any software, you have total control over the OS, the hosting configuration and the software inside. You can create VM from an array of predefined image to have an OS ready in minutes or use your own custom image. When choosing a VM you need to specify the resources associated: size (cores and RAM), storage disks, networking (public IP addresses, v net, port configuration)
 
 **VM Scale Sets**: this azure component allow you to manage, configure, and update a set of VMs together in one shot, you can set up scalability to increase/decrease the amount of machines in the set. Under the hood the scale sets deploys a load balancer that makes sure to balance the load across the VMs. (imagine you are patching the OS of one of the machines, the load balancer will redirect traffic to the other instances of the set)
 
@@ -52,15 +14,15 @@ VMs are also an excellent choice when you move from a physical server to the clo
 **Azure Virtual Desktop**: types of VM, it enables the usage of a cloud-hosted OS from a virtual remote control (it works with many apps that offers remote desktop solutions, or even in the browser) With Azure virtual desktop, users connect to the remote VM in a secure v net, the manager of the resource can decide how many user can connect to it at the same time.
 You can scale up and down as needed. the app will work and look like it's local (except for a small icon identifying that is it is virtual). This enhances security because it's centralized and the users don't have to worry. The data and the apps are separated from the client's hardware making the risk of confidential data leak smaller.
 
-**Azure containers Instances**: containers are virtualization environments, you can run multiple different OS containers inside the same virtual host. Containers are more light-weight w.r.t VMs and they are designed to be created, scaled and stopped frequently. Azure supports Docker as a container engine.
+**Azure containers Instances**: containers are virtualization environments, you can run multiple different OS containers inside the same virtual host. Containers are more light-weight w.r.t VMs and they are designed to be created, scaled and stopped frequently. Azure supports Docker as a container engine. With containers you can run also 0 nodes, not like VM where you need at least one instance.
 VM virtualize the hardware while Containers virtualize the operating system. With containers you can run multiple OS in the same host. Containers are more portable. Containers are a PaaS offering because they manage the underlying VM.
 **Azure container Apps** are a more advanced solution that allows you to run an app right away, this service removes the container management responsibility from the customer to the cloud provider.
-**Azure Kubernetes service**: a more complete solution offering also the container management of Kubernetes
+**Azure Kubernetes service**: a more complete solution offering also the container management of Kubernetes. (min 3 nodes)
 
 ## Azure Functions
-It's a service for event-driven, serverless backend computation that doesn't require VM or Containers. Azure functions don't consume resources because they are not running, but they are woken up when the specified event occurs. Its called serverless but there are actual server running the function, but they are managed for you by the provider. Serverless automatically scale and apply high availability, they are also cheap because you only pay for the time in which your code runs. They are useful when you are only concerned about the code running and not the infrastructure. Functions can be stateful (Durable Functions), they use a context passed as input to track the state.
+It's a service for event-driven, serverless backend computation that doesn't require VM or Containers. Azure functions don't consume resources because they are not running, but they are woken up when the specified event occurs. Its called serverless but there are actual server running the function, but they are managed for you by the provider. Serverless automatically scale and apply high availability, they are also cheap because you only pay for the time in which your code runs. They are useful when you are only concerned about the code running and not the infrastructure. Functions can be stateful (Durable Functions), they use a context passed as input to track the state. They are very scalable (from 0 to 200 nodes).
 
-### Azure App Service
+### Azure App Service (Web App)
 An alternative to VMs and Containers, App Service are a robust hosting option, it's based on HTTP and it supports multiple languages (.NET, Java, ruby, node.js, Python), it's ideal to host a REST API.
 It can be used for
 - web apps
@@ -72,23 +34,25 @@ With App Services, deployment (directly from code repository in github) and mana
 # Network Components
 **Virtual Networks** and **Virtual subnets** are used to make azure resources communicate with each other, with the internet and with other on-premises services, they provide isolation and segmentation of networks, they perform routing and filtering of the traffic.
 - **Public endpoints**: public IP accessible in the internet
-- **Private endpoints**: internal to a virtual network they have a private IP address from the address space of that vnet.
+- **Private endpoints**: internal to a virtual network they have a private IP address from the address space of that vnet
 
-When you create a vnet you set up a private IP address space that exists only inside the network, you can further split the IP range in subnets. For name resolution you can use the Azure service built-in or using external DNS.
+vnets are scoped to a single region. When you create a vnet you set up a private IP address space that exists only inside the network, you can further split the IP range in subnets. For name resolution you can use the Azure service built-in or using external DNS.
 
 To make a resource accessible from the whole internet you need to create a **public IP** and assign it, otherwise you can put the resource behind a public load balancer.
 
 If you want to link different private azure resources you can use **Service Endpoints** (which are not exposed externally).
+If you need to link different vnet without a VPN you can use **VNet Peering**
 
 If you need to link the on-premises resources to the Azure cloud resources, you can use an Azure **VPN**, or **Azure ExpressRoute** which provides a dedicated VPN that doesn't travel over the internet but in private channels (used for high bandwidth and higher levels of security).
 
 Azure automatically handles the routing between the subnets, but you can override the behavior with custom elements:
-- **Route tables:** you can define you own rules of routing
+- **Route tables:** you can define you own rules of routing (User Defined Routes)
 - **Border Gateway Protocol**: used with VPNs to propagate the on-premises BGP routes to Azure virtual networks.
 
 In order to specify custom filtering you can use:
-- **Network security groups**: Azure resources that specify multiple inbound and outbound security rules (they work on all the layers, IP, ports, protocol used)
+- **Network security groups**: Azure resources that specify multiple inbound and outbound security rules (they work on all the layers, IP, ports, protocol used) They allow you to manage networking rules in your subnets, creating isolated networks, filtering traffic by rules. You can use **Application Security Groups** to create a logical grouping of resources so that you can target them inside yout NSG rules instead of targeting static IPs.
 - **Network virtual alliances**: specialized VMs that perform network function (such as running a firewall).
+- **Azure firewall**: a firewall component that is automatically configured by azure as an entry point for a virtual network and all the component inside, it is scalable.
 
 You can link different virtual networks using **virtual network peering**: it uses private channels to send data inside azure backbone network, never entering the public internet.
 
@@ -112,6 +76,12 @@ Connectivity models:
 ### Azure DNS
 A DNS scaled at Azure level, it is reliable and highly available, it is secure because it provides role-based access control, activity logs to monitor activity, resource locking to lock a subscription, resource group, or resource. With Azure DNS you can use Alias Record to refer to an Azure resource, it will be updated automatically if the unerlying IP address changes.
 
+### Azure Load Balancer
+Network component that evenly distributes traffic in multiple instances connected to the balancer, it increases availability and scalability. The load balancer automatically detects if a VM is down. It can be public or private (internal).
+Generally, HTTP traffic coming from the open world is managed by a specific type of load balancer called **APP GATEWAY**: has integrated features such as web application firewall, redirection capabilities.
+
+### Content delivery Network
+In order to reduce latency to users accessing the static content of your app, it will automatically distribute those statics all over the world (in Points Of Presence - POP).
 
 # Storage Services
 Different storage solutions based on the needs. Massive amount of binary data (BLOB storage). File storage, ideal for file sharing on the cloud. Disk storage, provide disks for VM and applications, SSD and conventional hard drives, Table stores, great for key value pairs storing. Message queue for storing messages not yet processed. You can optimize the cost by choosing between:
@@ -145,15 +115,15 @@ You can access objects in the blob storage through an API or use client applicat
 - Block blobs: composed of blocks, you can only modify entire block at a time (optimized to upload big data efficiently)
 - Append blobs: it is a variation of a block blob optimized for append operation
 ### Azure files
-Fully managed file share solution accessible through network file system protocols or Server message block.
+Fully managed file share solution accessible through network file system protocols or Server message block. It is like the blob storage but you access it as a remote file system.
 ### Azure queues
 Service for storing large number of messages. Once stored they can be access anywhere, each individual message can take up to 64Kb. They can be combined with azure functions to take an action when a message is received, in order to perform async tasks.
 ### Azure disks
-block-level storage volumes managed by azure, they are like physical disks, but virtualized, ideal to be paired with VMs that require storage.
+block-level storage volumes managed by azure, they are like physical disks, but virtualized, ideal to be paired with VMs that require storage. It can managed/unmanaged (on client side).
 ### Azure tables
-Key value pair storage of large amount of data. It is a NoSQL datastore ideal for storing non-structured data.
+Key value pair storage of large amount of data. It is a NoSQL datastore ideal for storing semi-structured data.
 
-## Data Migration
+### Data Migration
 Azure migrate is a service that help your migration to the cloud, it provides:
 - **Unified migration platform**: a portal to track your migration process.
 - **Tools**: used for assessment and migration:
@@ -169,6 +139,9 @@ For smaller amount of data Azure offers the following:
 - **Azure storage explorer**: standalone application that has a UI to manage files and blobs in your storage account (it is a UI on top of AzCopy)
 - **Azure file sync**: tool to sync between a local Window server and azure storage, it is bi-directionally synced
 
+### Databases
+- CosmosDB: NoSQL DB, available in many regions globally, low-latency DB
+- SQL DB: relational DB, there are also other services variations with MySQL and PostgreSQL managed instances.
 
 # Identity, Access and Security
 
@@ -210,7 +183,7 @@ users signal are used to take decisions which might require enforcements (such a
 You can also completely block access from specific signal condition (access only from managed device, block untrusted sources like unexpected locations).
 
 ### Azure role-based access control
-service that enables you to control access by using built-in and custom roles that describes common access rules to cloud resources. Instead of managing each user's permission, you create roles (grouping access permissions) and then you can assign roles to individuals. Role based access control is not generally assigned to the single resources but it is assigned to a **scope**. A scope can be 
+service that enables you to control access by using built-in and custom roles that describes common access rules to cloud resources. Instead of managing each user's permission, you create roles (grouping access permissions) and then you can assign roles to individuals (azure provides out of the box roles but you can define yours). Role based access control is not generally assigned to the single resources but it is assigned to a **scope**. A scope can be 
 - management group
 - subscription
 - resource group
