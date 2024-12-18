@@ -1,19 +1,24 @@
 ## Cost Management
 Azure cost is impacted by: 
 - resource type: (when you provision a resource, azure creates metered instances that track resource usage and compute your bill), the region, resource dimension and other resource settings have impact on the cost
-- consumption: cost proportional to usage, you can set an amount of consumption in advance to receive discount if the promise is maintained.
+- consumption: cost proportional to usage
 - maintenance: maintain what you need and remove what you don't
 - geography: the cost of power labor and taxes change depending on the region.
-- network traffic: different cost for inbound/outbound traffic
+- network traffic: different cost for inbound/outbound traffic, generally the inbound traffic is free
 - subscription type: in case of free trial subscription
 - marketplace items: when buying a resource from the marketplace you pay both azure for the resource and the third-party vendor for their services/expertise
+
+Cost reducing factors:
+- reservation: you can set an amount of consumption time in advance to receive discount (1 year / 3 years). You can reserve instances or capacity (for Db for ex)
+- hybrid use benefits: you can use the licenses that you already have on the azure resources that you provision avoiding the extra cost of the license in the azure resource.
+- spot VM: you can use the VMs that are tagged as 'unreserved' by azure (those are used by azure as a buffer in case they have scaling needs), they are cheaper but they can be revoke at any time by azure.
 
 Azure has many tools to help you understand the cost of your azure resources:
 **Total cost of ownership (TCO) calculator:** Used to compare costs between on-premises and azure resources. You can fill the details of your on-premise configuration, with IT labor cost, servers, databases, traffic, ...
 **Pricing calculator**: It gives you an estimated cost for provisioning a resource in Azure. useful to estimate future costs for a solution.
 **Azure advisor**: recommend ways to optimize the costs and monitor unused resources
 
-**Cost Management**: is a tool in the azure portal that provides the ability to check resource cost, create alerts based on spendings (budget alerts, credit alerts, department spending quote alerts), create budgets (set a limit for azure, based on subscription, resource group or others. You can configure automation that suspends resources upon budget alerts). You can visualize the costs in different ways (by region, by resource, ...)
+**Cost Management**: is a tool in the azure portal that provides the ability to check resource cost, create alerts based on the spendings (budget alerts, credit alerts, department spending quote alerts), create budgets (set a limit for azure, based on subscription, resource group or others. You can configure automation that suspends resources upon budget alerts). You can visualize the costs in different ways (by region, by resource, ...)
 
 **Tags**: a way to organize resources, they provide key value metadata to the resource. Useful for:
 - resource management
@@ -35,7 +40,7 @@ Azure policy initiative: a way of grouping related policies together.
 Azure policy comes with predefined policies and initiatives
 
 **Resource Lock**
-A mechanism that prevents resources from being deleted or changed, it can be applied to resources, resource groups or subscription. They are inherited.
+A mechanism that prevents resources from being deleted or changed, it can be applied to resources, resource groups or subscription (not on management group level). They are inherited.
 - Delete lock: it's still possible to modify the resource
 - readOnly lock: no changes allowed
 These locks cannot be overridden, even the owner of the resource must delete the lock to be able to delete the resource.
