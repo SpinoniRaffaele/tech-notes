@@ -40,7 +40,7 @@ vnets are scoped to a single region. When you create a vnet you set up a private
 
 To make a resource accessible from the whole internet you need to create a **public IP** and assign it, otherwise you can put the resource behind a public load balancer.
 
-If you want to link different private azure resources you can use **Service Endpoints** (which are not exposed externally).
+If you want to link different private azure resources in the same vnet you can use **Service Endpoints** (which are not exposed externally).
 If you need to link different vnet without a VPN you can use **VNet Peering**
 
 If you need to link the on-premises resources to the Azure cloud resources, you can use an Azure **VPN**, or **Azure ExpressRoute** which provides a dedicated VPN that doesn't travel over the internet but in private channels (used for high bandwidth and higher levels of security).
@@ -172,8 +172,6 @@ Azure provides passwords, 2FA (provided by Microsoft Entra Multifactor Authentic
 Windows Hello for business / Microsoft Authenticator App / FIDO2 security keys (external security key or a key built into a device) are the passwordless solutions that integrate with Microsoft Entra ID.
 
 **Microsoft Entra External ID** manages all the ways you can securely interact with users outside your org. External users uses their own digital identity (like google or Facebook or another company), the external identity provider manages their identity, Microsoft Entra external ID manages the access to your apps. If the external person comes from another Microsoft Entra org in a B2B context, you can establish a mutual, two-way trust between the orgs for seamless collaboration.
-In case you want to give access to customer instead, you can leverage Azure AD B2C for identity and access management.
-
 ### Azure Conditional Access
 is a tool that Entra ID uses to allow/deny access to resources based on identity signals (who is the user, where is the user, what is the device that the user is using).
 Useful to protect the organizational assets.

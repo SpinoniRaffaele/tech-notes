@@ -33,6 +33,10 @@ Resources don't inherit tags from resources groups or subscription
 **Microsoft Purview**: family of data governance, risk and compliance solutions that helps you handle your data. It has automatic data discovery and sensitive data classification to stay up to date with your generated data.
 It helps protect sensitive data, identify and manage regulatory compliance requirements.
 The unified data governance solutions manage all your data: on-premise, on azure and even on other clouds. It creates up-to-date map of your data estate, generate insights about how your data is stored and used, manage access.
+- Data Policy: governs access to data 
+- Data Estate Insights: gets data estate health
+- Data Sharing: shares data between organizations
+- Data Catalog: enables data discovery, a catalog of your data.
 
 **Azure Policy**: is a service in azure that enables you to create, assign and manage policies that control your resources. You can define standards and prevent the creation of resources that are not compliant.
 You can define policies at each level: subscription, resource group, resource. They will be inherited by child resources. In some cases Azure can automatically change the resources being created to adapt them to a certain policy (like adding a specific tag), you can of course remove this behavior at resource level.
@@ -77,7 +81,7 @@ You can filter the suggestions by resource groups or subscriptions. It is a free
 
 **Azure Service Health**: a service that keeps track of the resources (both your specific ones and azure in general). It uses three different services:
 - Azure status: the status of azure globally (used to monitor outages in AZs).
-- Service Health: it focuses on azure service and regions that you use, you can set it up to send you alert when certain conditions are met.
+- Service Health: it focuses on azure service and regions that you use, you can set it up to send you alert when certain conditions are met. **Health advisories** are service health issues that require that you take proactive action to avoid service interruptions, such as service retirements and breaking changes. 
 - Resource health: provides info about a single resource.
 
 **Azure Monitor**
