@@ -89,7 +89,7 @@ Different storage solutions based on the needs. Massive amount of binary data (B
 - cool (stored for at least 30 days, for example invoices)
 - cold: data stored for at least 90 days and accessed infrequently
 - archive (not frequent access, 180 days of storage min, such as backups).
-Hot, cool and cold can be set at account level. Archive can be set for individual resources. Cool and cold tiers have less availability but same durability. Archive has the lower cost in terms of storage but the highest in terms of access.
+Hot, cool and cold can be set at account level. Archive can be set for individual resources. Cool and cold tiers have less availability but same durability. Archive has the lowest cost in terms of storage but the highest in terms of access.
 
 In order to use storage solutions you need to create a storage account, the type of the account will determine the storage service and redundancy options (more on this later).
 Account types:
@@ -99,7 +99,7 @@ The storage account have an unique name that creates a namespace in azure. You w
 Storage is durable and highly available thanks to redundancy, it is secure because data is encrypted, it is accessible with a variety of libraries and with an API.
 
 ### Redundancy
-Azure stores multiple copies of data automatically, choosing the wright redundancy option is a trade off between cost and availability. For your data you have a primary region where it is stored and secondary regions for backup.
+Azure stores multiple copies of data automatically, choosing the right redundancy option is a trade off between cost and availability. For your data you have a primary region where it is stored and secondary regions for backup.
 
 Data in azure storage is always replicated 3 times in the primary region, it can be replicated in two ways:
 - **Locally redundant storage**: the 3 copies are in the same datacenter (11 nines of durability), 
