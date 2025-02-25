@@ -45,5 +45,143 @@ The pod yaml contains:
 - metadata: labels and name
 - spec: info about the containers inside the pod
 
+## Deployment
+A deployer is another kubernetes component, it is a higher level wrapper around a POD, it can handle only one pod template but multiple instances of it. Under the hood each deployment uses a replica set to handle the set of pods, each new version of the pod will stay in its own replica set (this eases rollbacks). With deployment you gain scalability, self healing, rolling-updates and rollbacks. When you define the specs of a deployment you add the number of replicas that you want for a POD. The Replica set works a reconciliation loop that ensures that the actual replicas of a pod matches the desired number of replicas. I foyu want to permform an update you change the yaml file of the deployment targeting the new image and you re-POST the yaml to the API server and recording to the deployment history.
+(`kubectl apply -f deploy.yaml --record=true`)
+. To deploy the new version kubernetes will create a new replica set and, one by one, change each pod to target the new one (rolling update with zero downtime). After all the pods are updated, the old replica set is maintained there, empty, in case of rollback.
+
+example of deployment specs:
+```yaml
+spec:
+  replicas: 10
+  selector: 
+    matchLabels: 
+      app: myapplabel
+  minReadySeconds: 10
+  strategy:
+    type: RollingUpdate
+  rollingUpdate:
+    maxUnavailable: 1  //this means that while updating we can have 10 - 1 replicas
+    maxSurge: 1  //this means that while updating we can have 10 + 1 replicas
+  template:
+    metadata:
+      labels:
+        app: myapplabel
+	spec:
+	  containers:
+	  - name: myapp
+```
+
+you can check the history of a deployment with:
+`kubectl rollout history deployment DEPLOYMENTNAME`
+
+For quick rollbacks you can do with a kubectl command, but this is not recommended, i would be better to deploy the old version of the application, this because the reollback is an imperative command that does not fit in the declarative philosophy of kubernetes.
+ex: `kubectl rollout undo deployment DEPLOYMENTNAME --to-revision=VERSIONNUMBER`
+
+
 # Service
-Services are kubernetes components that provide a stable DNS name and IP address as a front-end for a set of POD that change dynamically. The service performs also load balancing and automatically updates itself when POD changes. Service work at TCP/UDP level, so if you need application level routing you will need **Ingresses** . The PODs incuded in a Service are determined by a label selector that is a list of all the labels a POD must posses to receive traffic from a service.
+Services are kubernetes components that provide a stable DNS name and IP address as a front-end for a set of POD that change dynamically. The service performs also load balancing and automatically updates itself when POD changes. Service work at TCP/UDP level, so if you need application level routing you will need **Ingresses** . The PODs inlcuded in a Service are determined by a label selector that is a list of all the labels a POD must posses to receive traffic from a service. The logic to loosely couple PODs with services is an AND over the labels specified in the label selector. Under the hood, a service uses an Endpoint object that is a dynamic list of all the healthy pods that match the label selectors.
+There are many ports involved in a service:
+ - port: configures the port on which the service listen for cluster-internal requests
+ - nodePort: configures the port on which the service listen for external requests
+ - pargetPort: the port to use when communicating in the backend with the pods.
+### ClusterIP
+Is a type of Service that is accessible only from whithin the cluster. The service IP and port are registered in the cluster DNS that is hardcoded and accessible from every node, so everyone in the cluster knows about the service.
+
+### NodePort
+It is built on top of ClusterIP and it enable access from outside the cluster with a NodePort exposed outside the cluster that maps to one of the service internal ports. node port values are by default between 30000 and 32767
+
+### LoadBalancer
+Is a service that integrates with load balancers of cloud providers. It is built on top of NodePort
+
+### ExternalName
+A service that routes traffic to systems outside of your kubernetes cluster, generally not used.
+
+## Service Discovery
+Service registration is the process of a microservice registering its connection details in a **service registry** so that other microservices can find it.
+Kubernetes uses a DNS as service registry, services registers with the DNS. Every container has the DNS IP because kubernetes populates the `/etc/resolv.conf` file with the IP address of the cluster DNS. 
+Service Discovery is the process of finding the microservice with which we communicate.
+Any pod can refer to the service name to communicate with the pods behind, the DNS will resolve the service name and reach the service.
+In details, the IP address of the services is on a special network not accessible from the container. It will default to the default gateway (the node); the node itself doesn't have the route to the service IP and it will default to the default gateway (Node kernel). The node kernel contains trap IPVS rules that are added by the kube proxy service by listening to changes in the endpoint objects (through the API server). These rules intercept traffic of the node kernel redirecting them to the service.
+
+### Namespace
+Namespaces are a partition of the network address space of a cluster. They are useful for creating different environments with different quotas, however they are not ISOLATION BOUNDARIES and should not be used to isolate hostile loads. This because the DNS is general for the cluster and shared across namespaces, this means that any microservice in a namespace can resolve microservices in other namespaces by using fully qualified names that include also the namespace name. 
+
+# Storage
+Kubernetes ships a persistent volume subsystem to handle storage. Kubernetes doesn't handle any storage directly but it plugs in with external storage solutions.
+You have kubernetes component called Persistent Volumes (PV) which are the k8 representation of an external storage solution.
+Persistent Volume Claims that are tickets that allow pods to use a PV.
+Storage Classes: component that manages PV: you generally define the specs for storage classes which in turn automatically handle PVs.
+
+### Persistent Volume
+```yaml
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: demo-pv
+spec:
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 1Gi
+  storageClassName: standard
+```
+Access modes describe how the PV can be accessed:
+- ReadWriteOnce: can be used only by one PVC
+- ReadWriteMany: can be used by many PVCs
+- ReadOnlyMany: can be used by many PVCs in readonly
+
+The capacity can be less than the max capacity of the actual storage solution
+
+### Persistent Volume claim
+```yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-dynamic
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: standard
+```
+It matches the PV by name and it must have the same spec section
+
+
+Any pod can then refer the persistent volume claim:
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pvc-pod
+spec:
+  containers: ...
+  volumes:
+    - name: data
+      persistentVolumeClaim:
+        claimName: pvc-dynamic
+```
+
+### Storage Class
+They are immutable objects in the kubernetes API. It describes how PV should be created by K8.
+Once deployed the storage class watches the API server for new PVC, when they appear, it creates dynamically a PV and the corresponding volume on the backend.
+```yaml
+apiVersion: storage.k8s.io/v1  
+kind: StorageClass  
+metadata:  
+	name: standard  
+	provisioner: kubernetes.io/aws-ebs  
+	parameters:  # these parameters are specific to the provisioner (which is the plugin to the specific storage)
+		type: gp2  
+		fsType: ext4  
+		reclaimPolicy: Delete  
+		volumeBindingMode: Immediate  
+```
+
+The typical workflow for the storage solution in your k8s cluster is
+- ensure the plugin needed exists
+- create a storage class
+- create a persistent volume claim
+- deploy a pod that uses the persistem volume claim

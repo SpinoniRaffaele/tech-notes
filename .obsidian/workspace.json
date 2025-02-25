@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Work/Component.md",
+                "file": "Kubernetes/nigel poulton book/The kubernetes book.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Component"
+              "title": "The kubernetes book"
             }
           }
         ]
@@ -78,7 +78,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 220.5
+    "width": 220.5,
+    "collapsed": true
   },
   "right": {
     "id": "1afe7dcc473c96fe",
@@ -220,9 +221,11 @@
   },
   "active": "d93df450d64f5205",
   "lastOpenFiles": [
-    "2025-01-16.md",
+    "Work/Angular19.md",
     "Work/Component.md",
+    "Work/DB.md",
     "Kubernetes/nigel poulton book/The kubernetes book.md",
+    "2025-01-16.md",
     "Work/PTR.md",
     "blockchain/The Graph.md",
     "Work/PR management.md",
@@ -231,7 +234,6 @@
     "Kubernetes/nigel poulton book",
     "Work/Untitled.canvas",
     "Work/temp.md",
-    "Work/DB.md",
     "Work/CS Gateway.md",
     "Work/TODO.md",
     "azure fundamentals/fundamentals mindmap.canvas",
@@ -266,7 +268,6 @@
     "_resources/Pasted image 20241127103131.png",
     "Work/Drafts",
     "Work",
-    "Angular/HTTP in Angular.md",
     "_resources/ccip-diagram-04_v04.webp",
     "Untitled.canvas",
     "android",
