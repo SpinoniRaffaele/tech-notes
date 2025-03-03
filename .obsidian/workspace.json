@@ -1,14 +1,14 @@
 {
   "main": {
-    "id": "80bcdbdd6404ed6b",
+    "id": "083c6c6f3db1fe64",
     "type": "split",
     "children": [
       {
-        "id": "2a2732bb6dd6ed27",
+        "id": "b46a879b616a8a69",
         "type": "tabs",
         "children": [
           {
-            "id": "d93df450d64f5205",
+            "id": "36f7dee4627b66f5",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -27,15 +27,15 @@
     "direction": "vertical"
   },
   "left": {
-    "id": "cc7a8c8f34afcb0c",
+    "id": "7ab7719c3288d843",
     "type": "split",
     "children": [
       {
-        "id": "0ccd069bc2c9319a",
+        "id": "33e1a96c16700712",
         "type": "tabs",
         "children": [
           {
-            "id": "184085c262536dab",
+            "id": "1d90df96c6aca71a",
             "type": "leaf",
             "state": {
               "type": "file-explorer",
@@ -48,7 +48,7 @@
             }
           },
           {
-            "id": "3d2a868753520af9",
+            "id": "3e22617f6f6ef775",
             "type": "leaf",
             "state": {
               "type": "search",
@@ -65,7 +65,7 @@
             }
           },
           {
-            "id": "bc697688a25c2ae6",
+            "id": "479433bf85b5d113",
             "type": "leaf",
             "state": {
               "type": "bookmarks",
@@ -78,25 +78,23 @@
       }
     ],
     "direction": "horizontal",
-    "width": 220.5,
-    "collapsed": true
+    "width": 300
   },
   "right": {
-    "id": "1afe7dcc473c96fe",
+    "id": "d0b11bae935bb118",
     "type": "split",
     "children": [
       {
-        "id": "e3ab27005a5faac3",
+        "id": "4a6182d5583a95de",
         "type": "tabs",
-        "dimension": 55.46116504854368,
         "children": [
           {
-            "id": "4e18cb9e840110da",
+            "id": "8498b5c041ab1488",
             "type": "leaf",
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Presentations/slide test.md",
+                "file": "Kubernetes/nigel poulton book/The kubernetes book.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -106,64 +104,40 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks for slide test"
+              "title": "Backlinks for The kubernetes book"
             }
           },
           {
-            "id": "bfc2e363edee9088",
+            "id": "a1fb5876845ac44a",
             "type": "leaf",
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Presentations/slide test.md",
+                "file": "Kubernetes/nigel poulton book/The kubernetes book.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Outgoing links from slide test"
+              "title": "Outgoing links from The kubernetes book"
             }
           },
           {
-            "id": "a2eed1047b82bb1d",
+            "id": "7b20724511996070",
             "type": "leaf",
             "state": {
               "type": "tag",
               "state": {
                 "sortOrder": "frequency",
-                "useHierarchy": true
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
               },
               "icon": "lucide-tags",
               "title": "Tags"
             }
           },
           {
-            "id": "e6a610abe7137087",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "blockchain/The Graph.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "The Graph"
-            }
-          },
-          {
-            "id": "6aae4487897ed339",
-            "type": "leaf",
-            "state": {
-              "type": "outline",
-              "state": {
-                "file": "Presentations/slide test.md"
-              },
-              "icon": "lucide-list",
-              "title": "Outline of slide test"
-            }
-          },
-          {
-            "id": "47b744aaaf9d0988",
+            "id": "cc12ea113306cfef",
             "type": "leaf",
             "state": {
               "type": "graph",
@@ -173,7 +147,32 @@
             }
           },
           {
-            "id": "d0c1447d26e9f165",
+            "id": "1016154841aa8e94",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Kubernetes/nigel poulton book/The kubernetes book.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline of The kubernetes book"
+            }
+          },
+          {
+            "id": "06fc960ff7a1f831",
+            "type": "leaf",
+            "state": {
+              "type": "calendar",
+              "state": {},
+              "icon": "calendar-with-checkmark",
+              "title": "Calendar"
+            }
+          },
+          {
+            "id": "32f16f3be90b8a16",
             "type": "leaf",
             "state": {
               "type": "git-view",
@@ -184,93 +183,29 @@
           }
         ],
         "currentTab": 6
-      },
-      {
-        "id": "3868b9a0a0df01ff",
-        "type": "tabs",
-        "dimension": 44.53883495145632,
-        "children": [
-          {
-            "id": "f897e4553d711228",
-            "type": "leaf",
-            "state": {
-              "type": "calendar",
-              "state": {},
-              "icon": "calendar-with-checkmark",
-              "title": "Calendar"
-            }
-          }
-        ]
       }
     ],
     "direction": "horizontal",
-    "width": 336.5
+    "width": 300
   },
   "left-ribbon": {
     "hiddenItems": {
-      "obsidian-importer:Open Importer": false,
       "switcher:Open quick switcher": false,
-      "canvas:Create new canvas": false,
       "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
       "daily-notes:Open today's daily note": false,
       "templates:Insert template": false,
+      "obsidian-importer:Open Importer": false,
       "command-palette:Open command palette": false,
       "obsidian-git:Open Git source control": false,
       "obsidian-advanced-slides:Show Slide Preview": false
     }
   },
-  "active": "d93df450d64f5205",
+  "active": "36f7dee4627b66f5",
   "lastOpenFiles": [
-    "Work/Angular19.md",
-    "Work/Component.md",
-    "Work/DB.md",
     "Kubernetes/nigel poulton book/The kubernetes book.md",
-    "2025-01-16.md",
-    "Work/PTR.md",
-    "blockchain/The Graph.md",
-    "Work/PR management.md",
-    "Work/AppStore Local dev.md",
-    "Work/Webservices.md",
-    "Kubernetes/nigel poulton book",
-    "Work/Untitled.canvas",
-    "Work/temp.md",
-    "Work/CS Gateway.md",
-    "Work/TODO.md",
-    "azure fundamentals/fundamentals mindmap.canvas",
-    "Work/_resources/Pasted image 20241223102122.png",
-    "Work/_resources/Pasted image 20241223094339.png",
-    "Work/_resources",
-    "azure fundamentals/03 Cost management, Governance, Monitoring.md",
-    "azure fundamentals/02 Azure Architectural Components.md",
-    "azure fundamentals/01 Cloud Concepts.md",
-    "Untitled",
-    "Work",
-    "Work/Presentations/Respiration presentation.md",
-    "Work/Drafts/Custoloader refactor.md",
-    "Work/PRs Management.md",
-    "Work/Drafts/Login Skip.canvas",
-    "Work/AppStore Local Dev.md",
-    "_resources/azure-conditional-access.png",
-    "_resources/Pasted image 20240422164058.png",
-    "_resources/storage-account-types.png",
-    "Work/Presentations/resources/appstoreDeployment.png",
-    "Presentations/slide test.md",
-    "Work/Presentations/resources",
-    "android/Android development.md",
-    "fab.md",
-    "SQL/SQL CHEATSHEET.md",
-    "Work/Drafts/Login Skip.md",
-    "Presentations/Untitled.canvas",
-    "Work/Presentations",
-    "Typescript/note on online book.md",
-    "_resources/Pasted image 20241127103555.png",
-    "_resources/Pasted image 20241127103136.png",
-    "_resources/Pasted image 20241127103131.png",
-    "Work/Drafts",
-    "Work",
-    "_resources/ccip-diagram-04_v04.webp",
-    "Untitled.canvas",
-    "android",
-    "Snow"
+    "Kubernetes/nigel poulton book/configmapsk8.png",
+    "Work/Angular19.md",
+    "Work/Component.md"
   ]
 }

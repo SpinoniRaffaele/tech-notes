@@ -185,3 +185,61 @@ The typical workflow for the storage solution in your k8s cluster is
 - create a storage class
 - create a persistent volume claim
 - deploy a pod that uses the persistem volume claim
+
+# Config Maps
+In the pas application binaries and their configurations were bundled toghether, now moving towards the cloud microservices applications, this is an anti-pattern.
+By decoupling application and configuration we gain:
+- re-usable application images in different envs
+- simpler testing
+- fewer disruptive changes
+
+You should have only one copy of your app that you can deploy in different environment with different configurations applied to it.
+Kubernetes provides you the **ConfigMap** to store configuration data outside of your pods. It's important to avoid storing sensitive datsa in configmaps and use **secrets** instead.
+Config maps are simply a map of key value pairs, where keys are strings and value can contain anything (also entire file content).
+Data in a config map can be injected in a pod at runtime in different ways:
+- environment variables
+- arguments to the container startup command (still env variables)
+- files in a volume attached to the container
+
+```yaml
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: multimap
+data:
+  given: nigel
+  family: Poulton
+```
+
+### Config Maps as env variables
+After creating the configmap you can map its entries into environment variables in the container section of the pod.
+A drowback of doing this is that configmaps are static meaning that if you change the value it won't be reflected in the container.
+
+![[configmapsk8.png]]
+
+### Config Maps with volumes
+This is the most flexible options as when the values are updated in a config map, their new value are stored in the volume making them dynamic.
+This stores one file for each config map key.
+
+In order to have this setup you need to:
+- create a config map
+- create the config map volume in the pod template and mount it:
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: cmvol
+spec:
+  volumes:                 # this section creates a ConfigMap volume
+    - name: volmap
+      configMap:
+        name: multimap
+  containers:
+    - name: ctr
+      image: nginx
+      volumeMounts:          # specify where the configmaps is mounted
+        - name: volmap
+          mountPath: /etc/name
+```
+
+
