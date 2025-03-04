@@ -241,5 +241,92 @@ spec:
         - name: volmap
           mountPath: /etc/name
 ```
+# Stateful Sets
+Stateful application: an application that creates and saves persistent data.
+Stateful sets are used to manage such applications, they are comparable to Deployments.
+Stateful sets are part of the core api and they use controllers that run reconciliation loop to make sure that the state of the cluster match the declared one. They support self-healing, scaling and updates.
+On top of this (which is true also for deployments), they offer extra guarantee:
+- predictable and persistent Pod names
+- predictable and persistent hostnames
+- predictable and persistent volume bindings
+
+Those are stable upon failures, scaling and other scheduling operations.
+
+```yaml
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+	name: tkb-sts
+spec:
+	selector:
+		matchLabels:
+			app: mongo
+	serviceName: "tkb-sts"
+	replicas: 3
+	template:
+		metadata:
+			labels:
+				app: mongo
+		spec:
+			containers:
+			- name: ctr-mongo
+		      image: mongo:latest
+```
+
+The format of the predictable names of PODs in a stateful set is 
+`{statefulSetName}-{integer}`  with the integer being a 0-based number.
+Stateful sets create one pod at a time, they wait for the previous pod to be live and ready before starting the creation of the new one (While deployments would create them all at the same time causing potential race conditions). This is applied also when you scale up or down (one pod at a time will be added/removed). But deleting a stateful set won't terminate the pod in order.
+This behavios is the default, but it can be turned of by specifying a property inside the spec section of the stateful set:
+`podManagementPolicy: Parallel`
+
+When performing rolling updates, the stateful set always starts with the highest numbered pod and works down through the set, updating the pod container's one by one.
+Also, stateful sets do their own self-healing and scaling without the need of a replica set under the hood (unlike deployments).
+
+Stateful sets also manage volumes, they are decoupled from pods with the usual constructs (Persistent Volumes and Persistent Volume Claims), they are named in a predictable way to connect them to the right pod.
+
+Being pod and volumes decoupled, if a pod fails, the volume won't and it will be ready to be plugged to the new pod substituting the failed one.
+![[statefulsets volumes.png]]
 
 
+Each stateful set's pod needs its own unique storage, so also a unique PVC, but this isn't possible beacuse you would need to create a specific PVC for each pod in the storage set and keep adding and removing PVCs after scaling up or down the pods.
+To solve this, stateful sets use Volume Claim Template. Those objects (specified in the stateful set `spec` section) dynamically create
+new PVC and name them in a consistent manner. So whenever we scale the Stateful set we actually scale the pods and the PVCs; the volumes and the PVCs will only scale up and not down to avoid potential data loss, future scale up operation of pods will result in connecting new pods to the already created PVCs and Volumes.
+Example of  `volumeClaimTemplate` section:
+```yaml
+volumeClaimTemplates:
+- metadata:
+	name: webroot
+  spec:
+	accessModes: [ "ReadWriteOnce" ]
+	storageClassName: "flash"
+	resources:
+	  requests:
+		storage: 1G
+```
+
+### Headless Service
+Since stateful sets create predictable and long lived POD, it is possible to connect directly to the specific POD instance using a **Headless Service**:
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+	name: mongo-prod
+spec:
+	clusterIP: None
+	selector:
+		app: mongo
+		env: prod
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+	name: sts-mongo
+spec:
+	serviceName: mongo-prod     # association to the headless service
+```
+
+An headless service is a service object with a clusterIP set to `none` (it's like a service without the frontend ip to connect to it).
+It becomes a **Governing Service** when you list it in the stateful set manifest.
+In this scenario, the service creates DNS records for each pod in the stateful set that matches the label selector of the service.
+Other PODs can refer to the statefulset's pod's names to communicate with them.

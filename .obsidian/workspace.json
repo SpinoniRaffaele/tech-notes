@@ -78,7 +78,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 200
   },
   "right": {
     "id": "d0b11bae935bb118",
@@ -203,6 +203,7 @@
   },
   "active": "36f7dee4627b66f5",
   "lastOpenFiles": [
+    "Kubernetes/nigel poulton book/statefulsets volumes.png",
     "Kubernetes/nigel poulton book/The kubernetes book.md",
     "Kubernetes/nigel poulton book/configmapsk8.png",
     "Work/Angular19.md",
